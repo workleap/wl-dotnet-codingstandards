@@ -207,12 +207,12 @@ dotnet_diagnostic.IDE0048.severity = silent
 
 # IDE0051: Remove unused private members
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0051
-# Enabled: True, Severity: suggestion
+# Enabled: True, Severity: silent
 dotnet_diagnostic.IDE0051.severity = suggestion
 
 # IDE0052: Remove unread private members
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0052
-# Enabled: True, Severity: suggestion
+# Enabled: True, Severity: silent
 dotnet_diagnostic.IDE0052.severity = suggestion
 
 # IDE0053: Use block body for lambda expression
@@ -380,6 +380,11 @@ dotnet_diagnostic.IDE0110.severity = warning
 # Enabled: True, Severity: silent
 dotnet_diagnostic.IDE0120.severity = silent
 
+# IDE0121: Simplify LINQ expression
+# Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0121
+# Enabled: True, Severity: silent
+dotnet_diagnostic.IDE0121.severity = silent
+
 # IDE0130: Namespace does not match folder structure
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0130
 # Enabled: True, Severity: silent
@@ -505,6 +510,11 @@ dotnet_diagnostic.IDE0304.severity = suggestion
 # Enabled: True, Severity: silent
 dotnet_diagnostic.IDE0305.severity = suggestion
 
+# IDE0306: Simplify collection initialization
+# Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0306
+# Enabled: True, Severity: silent
+dotnet_diagnostic.IDE0306.severity = silent
+
 # IDE0320: Make anonymous function static
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0320
 # Enabled: True, Severity: silent
@@ -514,6 +524,11 @@ dotnet_diagnostic.IDE0320.severity = silent
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0330
 # Enabled: True, Severity: silent
 dotnet_diagnostic.IDE0330.severity = suggestion
+
+# IDE0340: Use unbound generic type
+# Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0340
+# Enabled: True, Severity: silent
+dotnet_diagnostic.IDE0340.severity = silent
 
 # IDE1005: Delegate invocation can be simplified.
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide1005
