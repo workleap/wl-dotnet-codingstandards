@@ -51,6 +51,11 @@ jobs:
         env:
           NUGET_AUTH_TOKEN: ${{ steps.get_secrets.outputs.ado_pat }}
 
+      - name: Install Mono
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mono-complete
+
       - uses: NuGet/setup-nuget@v1
 
       - run: ./Build.ps1
