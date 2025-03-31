@@ -51,6 +51,8 @@ jobs:
         env:
           NUGET_AUTH_TOKEN: ${{ steps.get_secrets.outputs.ado_pat }}
 
+      - uses: NuGet/setup-nuget@v1
+
       - run: ./Build.ps1
         shell: pwsh
         env:
