@@ -16,13 +16,28 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: 'Azuze CLI login'
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Get Secrets from Azure Key Vault
+        id: get_secrets
+        run: |
+          # Set env.WORKLEAP_NUGET_API_KEY
+          WORKLEAP_NUGET_API_KEY=$(az keyvault secret show --vault-name ${{ vars.IDP_CICD_KEYVAULT_NAME }} --name "nuget-org-workleap-api-key" --query value -o tsv)
+          echo "::add-mask::$WORKLEAP_NUGET_API_KEY"
+          echo "workleap_nuget_api_key=$WORKLEAP_NUGET_API_KEY" >> $GITHUB_OUTPUT
+
       - uses: actions/setup-dotnet@v4
 
       - run: ./Build.ps1
         shell: pwsh
         env:
           NUGET_SOURCE: ${{ secrets.NUGET_SOURCE }}
-          NUGET_API_KEY: ${{ secrets.WORKLEAP_NUGET_API_KEY }}
+          NUGET_API_KEY: ${{ steps.get_secrets.outputs.workleap_nuget_api_key }}
 
   linearb:
     needs: [main]
@@ -30,3 +45,6 @@ jobs:
     with:
       environment: 'release'
     secrets: inherit
+
+
+

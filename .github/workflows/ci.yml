@@ -24,17 +24,32 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: 'Azuze CLI login'
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Get Secrets from Azure Key Vault
+        id: get_secrets
+        run: |
+          # Set env.ADO_PAT
+          ADO_PAT=$(az keyvault secret show --vault-name ${{ vars.IDP_CICD_KEYVAULT_NAME }} --name "gsoft-nuget-feed-ado-pat" --query value -o tsv)
+          echo "::add-mask::$ADO_PAT"
+          echo "ado_pat=$ADO_PAT" >> $GITHUB_OUTPUT
+
       - uses: actions/setup-dotnet@v4
         with:
           source-url: ${{ secrets.NUGET_GSOFTDEV_FEED_URL }}
         env:
-          NUGET_AUTH_TOKEN: ${{ secrets.GSOFT_NUGET_API_KEY }}
+          NUGET_AUTH_TOKEN: ${{ steps.get_secrets.outputs.ado_pat }}
 
       - run: ./Build.ps1
         shell: pwsh
         env:
           NUGET_SOURCE: ${{ secrets.NUGET_GSOFTDEV_FEED_URL }}
-          NUGET_API_KEY: ${{ secrets.GSOFT_NUGET_API_KEY }}
+          NUGET_API_KEY: ${{ steps.get_secrets.outputs.ado_pat }}
 
   linearb:
     needs: [main]
@@ -42,3 +57,11 @@ jobs:
     with:
       environment: development
     secrets: inherit
+
+
+
+
+
+
+
+
