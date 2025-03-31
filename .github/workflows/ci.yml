@@ -14,6 +14,12 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 
+# We are using OpenID Connect to authenticate with Azure with secret.
+# https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-azure
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   main:
     # We need windows to use nuget
@@ -57,6 +63,8 @@ jobs:
     with:
       environment: development
     secrets: inherit
+
+
 
 
 
