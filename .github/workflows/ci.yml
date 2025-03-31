@@ -52,6 +52,7 @@ jobs:
           NUGET_AUTH_TOKEN: ${{ steps.get_secrets.outputs.ado_pat }}
 
       - name: Install Mono
+        shell: bash
         run: |
           sudo apt-get update
           sudo apt-get install -y mono-complete
