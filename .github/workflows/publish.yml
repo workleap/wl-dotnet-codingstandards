@@ -39,6 +39,14 @@ jobs:
 
       - uses: actions/setup-dotnet@v4
 
+      - name: Install Mono
+        shell: bash
+        run: |
+          apt-get update
+          apt-get install -y mono-complete
+
+      - uses: NuGet/setup-nuget@v1
+
       - run: ./Build.ps1
         shell: pwsh
         env:
