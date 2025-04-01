@@ -16,7 +16,7 @@ jobs:
   main:
     # We need windows to use nuget
     runs-on: [self-hosted, idp]
-    environment: prod
+    environment: ci
 
     steps:
       - uses: actions/checkout@v4
