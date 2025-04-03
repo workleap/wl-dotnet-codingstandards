@@ -13,6 +13,8 @@ internal sealed class ProjectBuilder : IDisposable
     private readonly TemporaryDirectory _directory;
     private readonly ITestOutputHelper _testOutputHelper;
 
+    public string RootFolder => this._directory.FullPath;
+
     public ProjectBuilder(PackageFixture fixture, ITestOutputHelper testOutputHelper)
     {
         this._testOutputHelper = testOutputHelper;
@@ -92,11 +94,21 @@ internal sealed class ProjectBuilder : IDisposable
         File.WriteAllText(this._directory.GetPath("test.csproj"), content);
     }
 
-    public async Task<SarifFile> BuildAndGetOutput(string[]? buildArguments = null)
+    public Task<SarifFile> BuildAndGetOutput(string[]? buildArguments = null)
+    {
+        return this.ExecuteDotnetCommandAndGetOutput("build", buildArguments);
+    }
+
+    public Task<SarifFile> PackAndGetOutput(string[]? buildArguments = null)
+    {
+        return this.ExecuteDotnetCommandAndGetOutput("pack", buildArguments);
+    }
+
+    private async Task<SarifFile> ExecuteDotnetCommandAndGetOutput(string command, string[]? buildArguments = null)
     {
         var result = await Cli.Wrap("dotnet")
             .WithWorkingDirectory(this._directory.FullPath)
-            .WithArguments(["build", .. (buildArguments ?? [])])
+            .WithArguments([command, .. (buildArguments ?? [])])
             .WithEnvironmentVariables(env => env.Set("CI", null).Set("GITHUB_ACTIONS", null))
             .WithStandardOutputPipe(PipeTarget.ToDelegate(this._testOutputHelper.WriteLine))
             .WithStandardErrorPipe(PipeTarget.ToDelegate(this._testOutputHelper.WriteLine))

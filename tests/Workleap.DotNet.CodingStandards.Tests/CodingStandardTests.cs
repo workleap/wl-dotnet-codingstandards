@@ -1,3 +1,5 @@
+using System.IO.Compression;
+using System.Reflection.PortableExecutable;
 using Workleap.DotNet.CodingStandards.Tests.Helpers;
 using Xunit.Abstractions;
 
@@ -142,6 +144,7 @@ public sealed class CodingStandardTests(PackageFixture fixture, ITestOutputHelpe
         Assert.False(data.HasError("NU1903"));
         Assert.True(data.HasWarning("NU1903"));
     }
+
     [Fact]
     public async Task ReportVulnerablePackage_DisabledWarningOnPackage()
     {
@@ -169,5 +172,81 @@ public sealed class CodingStandardTests(PackageFixture fixture, ITestOutputHelpe
         var data = await project.BuildAndGetOutput(["--configuration", "Release"]);
         Assert.False(data.HasError("NU1903"));
         Assert.False(data.HasWarning("NU1903"));
+    }
+
+    [Fact]
+    public async Task PdbShouldBeEmbedded_Dotnet_Build()
+    {
+        using var project = new ProjectBuilder(fixture, testOutputHelper);
+        project.AddFile("test.csproj", $"""
+                <Project Sdk="Microsoft.NET.Sdk">
+                  <PropertyGroup>
+                    <TargetFramework>net8.0</TargetFramework>
+                    <ImplicitUsings>enable</ImplicitUsings>
+                    <Nullable>enable</Nullable>
+                    <ErrorLog>{ProjectBuilder.SarifFileName},version=2.1</ErrorLog>
+                    <RootNamespace>Foo</RootNamespace>
+                  </PropertyGroup>
+                  
+                  <ItemGroup>
+                    <PackageReference Include="Workleap.DotNet.CodingStandards" Version="*" />
+                  </ItemGroup>
+                </Project>
+                """);
+
+        project.AddFile("Sample.cs", """
+            namespace Foo;
+            public static class Sample { }
+            """);
+        var data = await project.BuildAndGetOutput(["--configuration", "Release"]);
+
+        var outputFiles = Directory.GetFiles(Path.Combine(project.RootFolder, "bin", "Release", "net8.0"));
+        await AssertPdbIsEmbedded(outputFiles);
+    }
+
+    [Fact]
+    public async Task PdbShouldBeEmbedded_Dotnet_Pack()
+    {
+        using var project = new ProjectBuilder(fixture, testOutputHelper);
+        project.AddFile("test.csproj", $"""
+                <Project Sdk="Microsoft.NET.Sdk">
+                  <PropertyGroup>
+                    <TargetFramework>net8.0</TargetFramework>
+                    <ImplicitUsings>enable</ImplicitUsings>
+                    <Nullable>enable</Nullable>
+                    <ErrorLog>{ProjectBuilder.SarifFileName},version=2.1</ErrorLog>
+                    <RootNamespace>Foo</RootNamespace>
+                  </PropertyGroup>
+                  
+                  <ItemGroup>
+                    <PackageReference Include="Workleap.DotNet.CodingStandards" Version="*" />
+                  </ItemGroup>
+                </Project>
+                """);
+
+        project.AddFile("Sample.cs", """
+            namespace Foo;
+            public static class Sample { }
+            """);
+        var data = await project.PackAndGetOutput(["--configuration", "Release"]);
+
+        var extractedPath = Path.Combine(project.RootFolder, "extracted");
+        var files = Directory.GetFiles(Path.Combine(project.RootFolder, "bin", "Release"));
+        Assert.Single(files); // Only the .nupkg should be generated
+        var nupkg = files.Single(f => f.EndsWith(".nupkg", StringComparison.OrdinalIgnoreCase));
+        ZipFile.ExtractToDirectory(nupkg, extractedPath);
+
+        var outputFiles = Directory.GetFiles(extractedPath, "*", SearchOption.AllDirectories);
+        await AssertPdbIsEmbedded(outputFiles);
+    }
+
+    private static async Task AssertPdbIsEmbedded(string[] outputFiles)
+    {
+        Assert.DoesNotContain(outputFiles, f => f.EndsWith(".pdb", StringComparison.OrdinalIgnoreCase));
+        var dllPath = outputFiles.Single(f => f.EndsWith(".dll", StringComparison.OrdinalIgnoreCase));
+        await using var stream = File.OpenRead(dllPath);
+        var peReader = new PEReader(stream);
+        var debug = peReader.ReadDebugDirectory();
+        Assert.Contains(debug, entry => entry.Type == DebugDirectoryEntryType.EmbeddedPortablePdb);
     }
 }
