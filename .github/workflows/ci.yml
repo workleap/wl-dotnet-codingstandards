@@ -70,4 +70,6 @@ jobs:
     uses: workleap/wl-reusable-workflows/.github/workflows/linearb-deployment.yml@main
     with:
       environment: development
-    secrets: inherit
+    permissions:
+      id-token: write
+      contents: read
