@@ -57,7 +57,7 @@ jobs:
           apt-get update
           apt-get install -y mono-complete
 
-      - uses: NuGet/setup-nuget@v1
+      - uses: NuGet/setup-nuget@v2
 
       - run: ./Build.ps1
         shell: pwsh
