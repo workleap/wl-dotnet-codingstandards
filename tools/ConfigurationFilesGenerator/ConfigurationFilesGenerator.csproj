@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <PackageReference Include="Meziantou.Framework.FullPath" Version="1.0.17" />
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.4" />
     <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.13.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.13.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic" Version="4.13.0" />
