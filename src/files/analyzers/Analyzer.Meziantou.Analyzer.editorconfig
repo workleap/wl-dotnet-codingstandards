@@ -832,3 +832,8 @@ dotnet_diagnostic.MA0166.severity = suggestion
 # Enabled: False, Severity: suggestion
 dotnet_diagnostic.MA0167.severity = none
 
+# MA0168: Use readonly struct for in or ref readonly parameter
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0168.md
+# Enabled: False, Severity: suggestion
+dotnet_diagnostic.MA0168.severity = none
+
