@@ -23,7 +23,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: 'Azuze CLI login'
+      - name: 'Azure CLI login'
         uses: azure/login@v2
         with:
           client-id: ${{ vars.AZURE_CLIENT_ID }}
