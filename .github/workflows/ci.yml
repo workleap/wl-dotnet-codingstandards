@@ -24,13 +24,13 @@ jobs:
   main:
     # We need windows to use nuget
     runs-on: [self-hosted, idp]
-
+    environment: ci
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: 'Azuze CLI login'
+      - name: 'Azure CLI login'
         uses: azure/login@v2
         with:
           client-id: ${{ vars.AZURE_CLIENT_ID }}
