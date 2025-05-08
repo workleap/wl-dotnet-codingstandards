@@ -30,26 +30,21 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: 'Azure CLI login'
-        uses: azure/login@v2
+      - name: Get gsoft-nuget-feed secret
+        id: get_gsoft_nuget_feed_secret
+        uses: workleap/wl-reusable-workflows/retrieve-managed-secret@main
         with:
-          client-id: ${{ vars.AZURE_CLIENT_ID }}
-          tenant-id: ${{ vars.AZURE_TENANT_ID }}
-          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-
-      - name: Get Secrets from Azure Key Vault
-        id: get_secrets
-        run: |
-          # Set env.ADO_PAT
-          ADO_PAT=$(az keyvault secret show --vault-name ${{ vars.IDP_CICD_KEYVAULT_NAME }} --name "gsoft-nuget-feed-ado-pat" --query value -o tsv)
-          echo "::add-mask::$ADO_PAT"
-          echo "ado_pat=$ADO_PAT" >> $GITHUB_OUTPUT
+          azure-client-id: ${{ vars.AZURE_CLIENT_ID }}
+          azure-tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+          keyvault-name: ${{ vars.IDP_CICD_KEYVAULT_NAME }}
+          secret-name: "gsoft-nuget-feed-ado-pat"
 
       - uses: actions/setup-dotnet@v4
         with:
-          source-url: ${{ secrets.NUGET_GSOFTDEV_FEED_URL }}
+          source-url: ${{ vars.GSOFTDEV_NUGET_SOURCE }}
         env:
-          NUGET_AUTH_TOKEN: ${{ steps.get_secrets.outputs.ado_pat }}
+          NUGET_AUTH_TOKEN: ${{ steps.get_gsoft_nuget_feed_secret.outputs.secret }}
 
       - name: Install Mono
         shell: bash
@@ -62,8 +57,8 @@ jobs:
       - run: ./Build.ps1
         shell: pwsh
         env:
-          NUGET_SOURCE: ${{ secrets.NUGET_GSOFTDEV_FEED_URL }}
-          NUGET_API_KEY: ${{ steps.get_secrets.outputs.ado_pat }}
+          NUGET_SOURCE: ${{ vars.GSOFTDEV_NUGET_SOURCE }}
+          NUGET_API_KEY: ${{ steps.get_gsoft_nuget_feed_secret.outputs.secret }}
 
   linearb:
     needs: [main]
