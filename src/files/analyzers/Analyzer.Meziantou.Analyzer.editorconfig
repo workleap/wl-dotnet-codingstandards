@@ -837,3 +837,8 @@ dotnet_diagnostic.MA0167.severity = none
 # Enabled: False, Severity: suggestion
 dotnet_diagnostic.MA0168.severity = none
 
+# MA0169: Use Equals method instead of operator
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0169.md
+# Enabled: True, Severity: warning
+dotnet_diagnostic.MA0169.severity = none
+
