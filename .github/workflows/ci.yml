@@ -23,7 +23,7 @@ permissions:
 jobs:
   main:
     # We need windows to use nuget
-    runs-on: [self-hosted, idp]
+    runs-on: [idp]
     environment: ci
     steps:
       - uses: actions/checkout@v4
