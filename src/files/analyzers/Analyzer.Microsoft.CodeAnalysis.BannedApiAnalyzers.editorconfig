@@ -3,12 +3,12 @@ is_global = true
 global_level = 0
 
 # RS0030: Do not use banned APIs
-# Help link: https://github.com/dotnet/roslyn-analyzers/blob/main/src/Microsoft.CodeAnalysis.BannedApiAnalyzers/BannedApiAnalyzers.Help.md
+# Help link: https://github.com/dotnet/roslyn/blob/main/src/RoslynAnalyzers/Microsoft.CodeAnalysis.BannedApiAnalyzers/BannedApiAnalyzers.Help.md
 # Enabled: True, Severity: warning
 dotnet_diagnostic.RS0030.severity = warning
 
 # RS0031: The list of banned symbols contains a duplicate
-# Help link: https://github.com/dotnet/roslyn-analyzers/blob/main/src/Microsoft.CodeAnalysis.BannedApiAnalyzers/BannedApiAnalyzers.Help.md
+# Help link: https://github.com/dotnet/roslyn/blob/main/src/RoslynAnalyzers/Microsoft.CodeAnalysis.BannedApiAnalyzers/BannedApiAnalyzers.Help.md
 # Enabled: True, Severity: warning
 dotnet_diagnostic.RS0031.severity = warning
 
