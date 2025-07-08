@@ -21,11 +21,15 @@
   <!-- Banned Symbols -->
   <PropertyGroup>
     <IncludeDefaultBannedSymbols Condition="$(IncludeDefaultBannedSymbols) == ''">true</IncludeDefaultBannedSymbols>
+    <BanNewtonsoftJsonSymbols Condition="$(BanNewtonsoftJsonSymbols) == ''">false</BanNewtonsoftJsonSymbols>
   </PropertyGroup>
 
   <ItemGroup>
     <AdditionalFiles Include="$(MSBuildThisFileDirectory)\..\files\BannedSymbols.txt"
       Condition="$(IncludeDefaultBannedSymbols) == 'true'"
+      Visible="false" />
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)\..\files\BannedSymbols.Newtonsoft.Json.txt"
+      Condition="$(BanNewtonsoftJsonSymbols) == 'true'"
       Visible="false" />
   </ItemGroup>
 </Project>

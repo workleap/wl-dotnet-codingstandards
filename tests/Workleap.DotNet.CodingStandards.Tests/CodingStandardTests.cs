@@ -18,6 +18,29 @@ public sealed class CodingStandardTests(PackageFixture fixture, ITestOutputHelpe
     }
 
     [Fact]
+    public async Task BannedNewtonsoftJsonSymbolsAreReportedWhenPropertyIsSet()
+    {
+        using var project = new ProjectBuilder(fixture, testOutputHelper);
+        project.AddCsprojFile(
+            properties: new Dictionary<string, string> { { "BanNewtonsoftJsonSymbols", "true" } },
+            packageReferences: new Dictionary<string, string> { { "Newtonsoft.Json", "13.0.1" } });
+        project.AddFile("sample.cs", "_ = Newtonsoft.Json.JsonConvert.SerializeObject(new object());");
+        var data = await project.BuildAndGetOutput();
+        Assert.True(data.HasWarning("RS0030"));
+    }
+
+    [Fact]
+    public async Task BannedNewtonsoftJsonSymbolsAreNotReportedWhenPropertyIsNotSet()
+    {
+        using var project = new ProjectBuilder(fixture, testOutputHelper);
+        project.AddCsprojFile(
+            packageReferences: new Dictionary<string, string> { { "Newtonsoft.Json", "13.0.1" } });
+        project.AddFile("sample.cs", "_ = Newtonsoft.Json.JsonConvert.SerializeObject(new object());");
+        var data = await project.BuildAndGetOutput();
+        Assert.False(data.HasWarning("RS0030"));
+    }
+
+    [Fact]
     public async Task WarningsAsErrorOnGitHubActions()
     {
         using var project = new ProjectBuilder(fixture, testOutputHelper);
