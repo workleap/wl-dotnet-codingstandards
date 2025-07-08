@@ -29,6 +29,13 @@ If you also have a `Directory.Build.props` file in your solution, you can remove
 - Project properties, including deterministic build, strict mode, continuous integration build detection, [faster package restoration](https://learn.microsoft.com/en-us/nuget/reference/msbuild-targets#restoring-with-msbuild-static-graph-evaluation), and [faster builds on Visual Studio](https://devblogs.microsoft.com/visualstudio/vs-toolbox-accelerate-your-builds-of-sdk-style-net-projects/), and more.
 - .NET analysis rules configuration, including style rules (`IDExxxx`) and code analysis rules (`CAxxxx`). These rules have been manually configured to provide a good balance between quality, performance, security, and build time.
 - Banned APIs, such as `DateTime.Now` and `DateTimeOffset.Now` (use their UTC counterparts instead).
+- Opt-in banning `Newtonsoft.Json`:
+
+    ```xml
+    <PropertyGroup>
+        <BanNewtonsoftJsonSymbols>true</BanNewtonsoftJsonSymbols>
+    </PropertyGroup>
+    ```
 
 ## What's NOT included
 
