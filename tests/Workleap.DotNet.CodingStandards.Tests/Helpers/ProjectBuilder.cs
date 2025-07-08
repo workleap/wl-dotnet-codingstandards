@@ -56,7 +56,7 @@ internal sealed class ProjectBuilder : IDisposable
         {
             foreach (var prop in properties)
             {
-                propertyElement.Add(new XElement(prop.Key), prop.Value);
+                propertyElement.Add(new XElement(prop.Key, prop.Value));
             }
         }
 
