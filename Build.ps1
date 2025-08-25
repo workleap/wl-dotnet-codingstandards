@@ -40,6 +40,9 @@ Process {
     if (($null -ne $env:NUGET_SOURCE) -and ($null -ne $env:NUGET_API_KEY)) {
       Exec { & dotnet nuget push "$nupkgsPath" -s $env:NUGET_SOURCE -k $env:NUGET_API_KEY --skip-duplicate }
     }
+    elseif (($null -ne $env:NUGET_SOURCE) -and ($null -ne $env:VSS_NUGET_ACCESSTOKEN)) {
+      Exec { & dotnet nuget push "$nupkgsPath" -s $env:NUGET_SOURCE -k "az-api-key" --skip-duplicate }
+    }
   }
   finally {
     Pop-Location
