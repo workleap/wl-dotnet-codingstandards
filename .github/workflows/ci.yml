@@ -30,21 +30,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get gsoft-nuget-feed secret
-        id: get_gsoft_nuget_feed_secret
-        uses: workleap/wl-reusable-workflows/retrieve-managed-secret@main
+      - name: Azure Artifacts Authenticate
+        uses: workleap/wl-reusable-workflows/az-artifact-authenticate@main
         with:
-          azure-client-id: ${{ vars.AZURE_CLIENT_ID }}
-          azure-tenant-id: ${{ vars.AZURE_TENANT_ID }}
-          azure-subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-          keyvault-name: ${{ vars.IDP_CICD_KEYVAULT_NAME }}
-          secret-name: "gsoft-nuget-feed-ado-pat"
-
-      - uses: actions/setup-dotnet@v4
-        with:
-          source-url: ${{ vars.GSOFTDEV_NUGET_SOURCE }}
-        env:
-          NUGET_AUTH_TOKEN: ${{ steps.get_gsoft_nuget_feed_secret.outputs.secret }}
+          feed-url: ${{ vars.GSOFTDEV_NUGET_SOURCE }}
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
 
       - name: Install Mono
         shell: bash
@@ -58,7 +50,6 @@ jobs:
         shell: pwsh
         env:
           NUGET_SOURCE: ${{ vars.GSOFTDEV_NUGET_SOURCE }}
-          NUGET_API_KEY: ${{ steps.get_gsoft_nuget_feed_secret.outputs.secret }}
 
   linearb:
     needs: [main]
