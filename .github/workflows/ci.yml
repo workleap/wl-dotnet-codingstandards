@@ -34,9 +34,10 @@ jobs:
         uses: workleap/wl-reusable-workflows/az-artifact-authenticate@main
         with:
           feed-url: ${{ vars.GSOFTDEV_NUGET_SOURCE }}
-          client-id: ${{ vars.AZURE_CLIENT_ID }}
-          tenant-id: ${{ vars.AZURE_TENANT_ID }}
-          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+          variables: |
+            AZURE_CLIENT_ID=${{ vars.AZURE_CLIENT_ID }}
+            AZURE_TENANT_ID=${{ vars.AZURE_TENANT_ID }}
+            AZURE_SUBSCRIPTION_ID=${{ vars.AZURE_SUBSCRIPTION_ID }}
 
       - name: Install Mono
         shell: bash
