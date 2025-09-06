@@ -132,7 +132,7 @@ Finally, the warnings breaks the CI because they are treated as errors when buil
 
 ## Build and release process
 
-This project uses [GitVersion](https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/overview) as a .NET tool during the build process to automatically compute the version number for preview packages that are automatically published on the main branch and pull requests.
+This project uses [GitVersion](https://gitversion.net/) as a .NET tool during the build process to automatically compute the version number for preview packages that are automatically published on the main branch and pull requests.
 
 To publish a new public (non-preview) version, simply create a new release on GitHub with a `x.y.z` tag.
 
