@@ -583,3 +583,4 @@ dotnet_diagnostic.IDE2006.severity = warning
 # RemoveUnnecessaryImportsFixable:
 # Enabled: True, Severity: silent
 dotnet_diagnostic.RemoveUnnecessaryImportsFixable.severity = silent
+
