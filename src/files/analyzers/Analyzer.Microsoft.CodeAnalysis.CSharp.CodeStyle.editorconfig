@@ -548,7 +548,7 @@ dotnet_diagnostic.IDE1006.severity = warning
 # IDE2000: Avoid multiple blank lines
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide2000
 # Enabled: True, Severity: silent
-dotnet_diagnostic.IDE2000.severity = warning
+dotnet_diagnostic.IDE2000.severity = suggestion
 
 # IDE2001: Embedded statements must be on their own line
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide2001
