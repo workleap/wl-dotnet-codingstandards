@@ -1,4 +1,5 @@
 namespace Workleap.DotNet.CodingStandards.Tests.Helpers;
+
 internal static class SharedHttpClient
 {
     public static HttpClient Instance { get; } = CreateHttpClient();

@@ -34,7 +34,7 @@ Process {
     Exec { & dotnet pack Workleap.DotNet.CodingStandards.csproj --output $outputDir -p:NuspecProperties=version=$version }
 
     # Run tests
-    Exec { & dotnet test --configuration Release --logger "console;verbosity=detailed" }
+    Exec { & dotnet test wl-dotnet-codingstandards.slnx --configuration Release --logger "console;verbosity=detailed" }
 
     # Push to a NuGet feed if the environment variables are set
     if (($null -ne $env:NUGET_SOURCE) -and ($null -ne $env:NUGET_API_KEY)) {
