@@ -219,7 +219,10 @@ public sealed class CodingStandardTests(PackageFixture fixture, ITestOutputHelpe
 
         project.AddFile("Sample.cs", """
             namespace Foo;
-            public static class Sample { }
+
+            public static class Sample
+            {
+            }
             """);
         var data = await project.BuildAndGetOutput(["--configuration", "Release"]);
 
@@ -249,7 +252,10 @@ public sealed class CodingStandardTests(PackageFixture fixture, ITestOutputHelpe
 
         project.AddFile("Sample.cs", """
             namespace Foo;
-            public static class Sample { }
+
+            public static class Sample
+            {
+            }
             """);
         var data = await project.PackAndGetOutput(["--configuration", "Release"]);
 
