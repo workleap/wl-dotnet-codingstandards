@@ -4,11 +4,8 @@
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageOutputPath>./outputs/nugets</PackageOutputPath>
     <NoWarn>NU5128</NoWarn>
-    <Version>1.0.0</Version>
     <NuSpecFile>Workleap.DotNet.CodingStandards.nuspec</NuSpecFile>
-    <NuspecBasePath></NuspecBasePath>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Remove="Workleap.DotNet.CodingStandards" />
