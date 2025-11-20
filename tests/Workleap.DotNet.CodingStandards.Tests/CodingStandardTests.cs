@@ -257,7 +257,7 @@ public sealed class CodingStandardTests(PackageFixture fixture, ITestOutputHelpe
         var files = Directory.GetFiles(Path.Combine(project.RootFolder, "bin", "Release"));
         Assert.Single(files); // Only the .nupkg should be generated
         var nupkg = files.Single(f => f.EndsWith(".nupkg", StringComparison.OrdinalIgnoreCase));
-        ZipFile.ExtractToDirectory(nupkg, extractedPath);
+        await ZipFile.ExtractToDirectoryAsync(nupkg, extractedPath);
 
         var outputFiles = Directory.GetFiles(extractedPath, "*", SearchOption.AllDirectories);
         await AssertPdbIsEmbedded(outputFiles);

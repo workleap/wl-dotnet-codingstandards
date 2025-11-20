@@ -257,7 +257,7 @@ dotnet_diagnostic.MA0051.severity = none
 # Enabled: True, Severity: suggestion
 dotnet_diagnostic.MA0052.severity = suggestion
 
-# MA0053: Make class sealed
+# MA0053: Make class or record sealed
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0053.md
 # Enabled: True, Severity: suggestion
 dotnet_diagnostic.MA0053.severity = none
@@ -527,7 +527,7 @@ dotnet_diagnostic.MA0105.severity = none
 # Enabled: True, Severity: suggestion
 dotnet_diagnostic.MA0106.severity = none
 
-# MA0107: Do not use culture-sensitive object.ToString
+# MA0107: Do not use object.ToString
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0107.md
 # Enabled: False, Severity: suggestion
 dotnet_diagnostic.MA0107.severity = none
@@ -841,4 +841,49 @@ dotnet_diagnostic.MA0168.severity = none
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0169.md
 # Enabled: True, Severity: warning
 dotnet_diagnostic.MA0169.severity = none
+
+# MA0170: Type cannot be used as an attribute argument
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0170.md
+# Enabled: False, Severity: warning
+dotnet_diagnostic.MA0170.severity = none
+
+# MA0171: Use pattern matching instead of HasValue for Nullable<T> check
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0171.md
+# Enabled: False, Severity: suggestion
+dotnet_diagnostic.MA0171.severity = none
+
+# MA0172: Both sides of the logical operation are identical
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0172.md
+# Enabled: False, Severity: warning
+dotnet_diagnostic.MA0172.severity = none
+
+# MA0173: Use LazyInitializer.EnsureInitialize
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0173.md
+# Enabled: True, Severity: suggestion
+dotnet_diagnostic.MA0173.severity = suggestion
+
+# MA0174: Record should use explicit 'class' keyword
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0174.md
+# Enabled: False, Severity: suggestion
+dotnet_diagnostic.MA0174.severity = none
+
+# MA0175: Record should not use explicit 'class' keyword
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0175.md
+# Enabled: False, Severity: suggestion
+dotnet_diagnostic.MA0175.severity = none
+
+# MA0176: Optimize guid creation
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0176.md
+# Enabled: True, Severity: suggestion
+dotnet_diagnostic.MA0176.severity = suggestion
+
+# MA0177: Use single-line XML comment syntax when possible
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0177.md
+# Enabled: False, Severity: suggestion
+dotnet_diagnostic.MA0177.severity = none
+
+# MA0178: Use TimeSpan.Zero instead of TimeSpan.FromXXX(0)
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0178.md
+# Enabled: True, Severity: suggestion
+dotnet_diagnostic.MA0178.severity = suggestion
 

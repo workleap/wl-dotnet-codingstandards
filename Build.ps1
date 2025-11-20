@@ -31,7 +31,7 @@ Process {
     Exec { & dotnet run --project=tools/ConfigurationFilesGenerator/ConfigurationFilesGenerator.csproj --configuration Release }
 
     # Pack using NuGet.exe
-    Exec { & nuget pack Workleap.DotNet.CodingStandards.nuspec -OutputDirectory $outputDir -Version $version -ForceEnglishOutput }
+    Exec { & dotnet pack Workleap.DotNet.CodingStandards.csproj --output $outputDir -p:NuspecProperties=version=$version }
 
     # Run tests
     Exec { & dotnet test --configuration Release --logger "console;verbosity=detailed" }
