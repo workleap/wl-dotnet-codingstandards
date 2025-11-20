@@ -11,25 +11,17 @@ Workleap.DotNet.CodingStandards is a NuGet package that provides coding standard
 
 1. **Install required dependencies:**
    ```bash
-   # Install .NET 9.0 SDK (required by global.json)
+   # Install .NET 10.0 SDK (required by global.json)
    wget https://dotnetcli.azureedge.net/dotnet/Sdk/9.0.304/dotnet-sdk-9.0.304-linux-x64.tar.gz
    sudo mkdir -p /usr/share/dotnet9
    sudo tar zxf dotnet-sdk-9.0.304-linux-x64.tar.gz -C /usr/share/dotnet9
    export PATH="/usr/share/dotnet9:$PATH"
    export DOTNET_ROOT="/usr/share/dotnet9"
-   
+
    # Install .NET 8.0 runtime (required for tests)
    wget https://dotnetcli.azureedge.net/dotnet/Runtime/8.0.12/dotnet-runtime-8.0.12-linux-x64.tar.gz
    sudo tar zxf dotnet-runtime-8.0.12-linux-x64.tar.gz -C /usr/share/dotnet9
-   
-   # Install Mono and NuGet.exe (required for packaging and tests)
-   sudo apt-get install -y mono-complete
-   wget https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
-   sudo mv nuget.exe /usr/local/bin/
-   echo '#!/bin/bash
-   exec mono /usr/local/bin/nuget.exe "$@"' | sudo tee /usr/local/bin/nuget
-   sudo chmod +x /usr/local/bin/nuget
-   
+
    # Install PowerShell (if not available)
    # PowerShell is already available in GitHub Actions
    ```
@@ -37,7 +29,7 @@ Workleap.DotNet.CodingStandards is a NuGet package that provides coding standard
 2. **Restore tools and build components:**
    ```bash
    dotnet tool restore  # Installs GitVersion - takes 5 seconds
-   
+
    # Generate analyzer configuration files - takes 15 seconds. NEVER CANCEL.
    dotnet run --project=tools/ConfigurationFilesGenerator/ConfigurationFilesGenerator.csproj --configuration Release --verbosity normal
    ```
@@ -51,7 +43,7 @@ Workleap.DotNet.CodingStandards is a NuGet package that provides coding standard
    ```bash
    # Get version (may fail on feature branches - use manual version instead)
    VERSION=$(dotnet dotnet-gitversion /output json /showvariable SemVer 2>/dev/null || echo "1.1.25-dev")
-   
+
    # Pack the package
    nuget pack Workleap.DotNet.CodingStandards.nuspec -OutputDirectory .output -Version $VERSION -ForceEnglishOutput
    ```
@@ -61,7 +53,7 @@ Workleap.DotNet.CodingStandards is a NuGet package that provides coding standard
    # NEVER CANCEL: Full build takes 60+ seconds
    export PATH="/usr/share/dotnet9:/usr/local/bin:$PATH"
    export DOTNET_ROOT="/usr/share/dotnet9"
-   
+
    dotnet tool restore
    dotnet run --project=tools/ConfigurationFilesGenerator/ConfigurationFilesGenerator.csproj --configuration Release
    VERSION=$(dotnet dotnet-gitversion /output json /showvariable SemVer 2>/dev/null || echo "1.1.25-dev")
@@ -92,7 +84,7 @@ pwsh --version  # Should show PowerShell 7.x
    ```bash
    # Should complete in ~15 seconds and show analyzer packages being processed
    dotnet run --project=tools/ConfigurationFilesGenerator/ConfigurationFilesGenerator.csproj --configuration Release
-   
+
    # Verify generated files exist
    ls -la src/files/analyzers/
    # Should show: Analyzer.*.editorconfig files and manual_rules.editorconfig
@@ -138,7 +130,7 @@ dotnet test --configuration Release   # Verify all tests pass
 src/
 ├── build/                              # MSBuild .props/.targets files
 ├── buildTransitive/                    # Transitive MSBuild files
-├── buildMultiTargeting/                # Multi-targeting MSBuild files  
+├── buildMultiTargeting/                # Multi-targeting MSBuild files
 └── files/
     ├── *.editorconfig                  # Static configuration files
     ├── BannedSymbols.txt               # Banned API definitions
@@ -150,23 +142,21 @@ tests/
 ```
 
 ### Dependencies and Requirements
-- **.NET 9.0 SDK:** Required for building (specified in global.json)
+- **.NET 10.0 SDK:** Required for building (specified in global.json)
 - **.NET 8.0 Runtime:** Required for running tests (test project targets net8.0)
 - **PowerShell:** Required for Build.ps1 script
-- **Mono + NuGet.exe:** Required for packaging and test fixtures
 - **GitVersion:** .NET tool for automatic versioning
 
 ### Timing Expectations
 **CRITICAL: Never cancel these operations. Set timeouts appropriately:**
 - Tool restore: ~5 seconds
 - ConfigurationFilesGenerator: ~15 seconds
-- Full build: ~20 seconds  
+- Full build: ~20 seconds
 - Tests: ~32 seconds (14 test cases)
 - Full CI pipeline: ~60 seconds total
 
 ### Build Failures and Solutions
-- **"SDK not found" error:** Ensure .NET 9.0 SDK is installed and in PATH
-- **"nuget command not found":** Install mono and create nuget wrapper script
+- **"SDK not found" error:** Ensure .NET 10.0 SDK is installed and in PATH
 - **Test failures with runtime errors:** Ensure .NET 8.0 runtime is available
 - **GitVersion errors on feature branches:** Use manual version instead
 
@@ -186,6 +176,6 @@ Tests use ProjectBuilder helper to:
 
 ## References
 - Build script: Build.ps1 (PowerShell)
-- CI workflow: .github/workflows/ci.yml  
+- CI workflow: .github/workflows/ci.yml
 - Package definition: Workleap.DotNet.CodingStandards.nuspec
 - Test project: tests/Workleap.DotNet.CodingStandards.Tests/
