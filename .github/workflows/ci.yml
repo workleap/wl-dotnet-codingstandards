@@ -54,6 +54,7 @@ jobs:
     uses: workleap/wl-reusable-workflows/.github/workflows/linearb-deployment.yml@main
     with:
       environment: development
+      cortexEntityIdOrTag: service-wl-dotnet-codingstandards
     permissions:
       id-token: write
       contents: read
