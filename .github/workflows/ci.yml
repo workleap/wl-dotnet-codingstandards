@@ -46,7 +46,7 @@ jobs:
         if: always()
         with:
           name: nuget-package
-          path: .output/*.nupkg
+          path: .output/**/*
           if-no-files-found: error
 
   linearb:
