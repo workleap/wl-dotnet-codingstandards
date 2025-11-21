@@ -1,181 +1,26 @@
-# Workleap.DotNet.CodingStandards
+**Any code you commit SHOULD compile, and new and existing tests related to the change SHOULD pass.**
 
-**ALWAYS follow these instructions first and only fallback to additional search and context gathering if the information in the instructions is incomplete or found to be in error.**
+You MUST make your best effort to ensure your changes satisfy those criteria before committing. If for any reason you were unable to build or test the changes, you MUST report that. You MUST NOT claim success unless all builds and tests pass as described above.
 
-Workleap.DotNet.CodingStandards is a NuGet package that provides coding standards, analyzers, and .editorconfig files for .NET projects. It packages MSBuild properties/targets files and generated analyzer configuration files.
+Do not complete without checking the relevant code builds and relevant tests still pass after the last edits you make. Do not simply assume that your changes fix test failures you see, actually build and run those tests again to confirm.
+Also, do not assume that tests pass just because you did not see any failures in your last test run; verify that all relevant tests were actually run.
 
-## Working Effectively
+You MUST follow all code-formatting and naming conventions defined in [`.editorconfig`](/.editorconfig).
 
-### Bootstrap, Build, and Test the Repository
-**CRITICAL TIMING:** Build takes 60+ seconds. Tests take 32+ seconds. ConfigurationFilesGenerator takes 15+ seconds. NEVER CANCEL any of these operations.
+In addition to the rules enforced by `.editorconfig`, you SHOULD:
 
-1. **Install required dependencies:**
-   ```bash
-   # Install .NET 10.0 SDK (required by global.json)
-   wget https://dotnetcli.azureedge.net/dotnet/Sdk/9.0.304/dotnet-sdk-9.0.304-linux-x64.tar.gz
-   sudo mkdir -p /usr/share/dotnet9
-   sudo tar zxf dotnet-sdk-9.0.304-linux-x64.tar.gz -C /usr/share/dotnet9
-   export PATH="/usr/share/dotnet9:$PATH"
-   export DOTNET_ROOT="/usr/share/dotnet9"
-
-   # Install .NET 8.0 runtime (required for tests)
-   wget https://dotnetcli.azureedge.net/dotnet/Runtime/8.0.12/dotnet-runtime-8.0.12-linux-x64.tar.gz
-   sudo tar zxf dotnet-runtime-8.0.12-linux-x64.tar.gz -C /usr/share/dotnet9
-
-   # Install PowerShell (if not available)
-   # PowerShell is already available in GitHub Actions
-   ```
-
-2. **Restore tools and build components:**
-   ```bash
-   dotnet tool restore  # Installs GitVersion - takes 5 seconds
-
-   # Generate analyzer configuration files - takes 15 seconds. NEVER CANCEL.
-   dotnet run --project=tools/ConfigurationFilesGenerator/ConfigurationFilesGenerator.csproj --configuration Release --verbosity normal
-   ```
-
-3. **Run tests - takes 35 seconds. NEVER CANCEL. Set timeout to 60+ minutes:**
-   ```bash
-   dotnet test --configuration Release --logger "console;verbosity=normal"
-   ```
-
-4. **Package the NuGet package - takes 2 seconds:**
-   ```bash
-   # Get version (may fail on feature branches - use manual version instead)
-   VERSION=$(dotnet dotnet-gitversion /output json /showvariable SemVer 2>/dev/null || echo "1.1.25-dev")
-
-   # Pack the package
-   nuget pack Workleap.DotNet.CodingStandards.nuspec -OutputDirectory .output -Version $VERSION -ForceEnglishOutput
-   ```
-
-5. **Complete build script (mimics Build.ps1):**
-   ```bash
-   # NEVER CANCEL: Full build takes 60+ seconds
-   export PATH="/usr/share/dotnet9:/usr/local/bin:$PATH"
-   export DOTNET_ROOT="/usr/share/dotnet9"
-
-   dotnet tool restore
-   dotnet run --project=tools/ConfigurationFilesGenerator/ConfigurationFilesGenerator.csproj --configuration Release
-   VERSION=$(dotnet dotnet-gitversion /output json /showvariable SemVer 2>/dev/null || echo "1.1.25-dev")
-   nuget pack Workleap.DotNet.CodingStandards.nuspec -OutputDirectory .output -Version $VERSION -ForceEnglishOutput
-   dotnet test --configuration Release --logger "console;verbosity=normal"
-   ```
-
-### Environment Setup Commands
-These are the exact commands for setting up the development environment:
-
-```bash
-# Set environment variables for all operations
-export PATH="/usr/share/dotnet9:/usr/local/bin:$PATH"
-export DOTNET_ROOT="/usr/share/dotnet9"
-
-# Verify installation
-dotnet --version  # Should show 9.0.304
-nuget  # Should show NuGet command line help
-pwsh --version  # Should show PowerShell 7.x
-```
-
-## Validation
-
-### Manual Testing Scenarios
-**ALWAYS run these validation steps after making changes:**
-
-1. **Verify ConfigurationFilesGenerator works:**
-   ```bash
-   # Should complete in ~15 seconds and show analyzer packages being processed
-   dotnet run --project=tools/ConfigurationFilesGenerator/ConfigurationFilesGenerator.csproj --configuration Release
-
-   # Verify generated files exist
-   ls -la src/files/analyzers/
-   # Should show: Analyzer.*.editorconfig files and manual_rules.editorconfig
-   ```
-
-2. **Verify package contents:**
-   ```bash
-   # After packaging, check package contents
-   unzip -l .output/Workleap.DotNet.CodingStandards.*.nupkg
-   # Should contain: build/, buildTransitive/, buildMultiTargeting/, files/ directories
-   ```
-
-3. **Test package installation (end-to-end test):**
-   ```bash
-   # Create test project
-   mkdir test-project && cd test-project
-   dotnet new console
-   dotnet add package Workleap.DotNet.CodingStandards --source ../../../.output --prerelease
-   dotnet build
-   # Should build successfully with coding standards applied
-   ```
-
-### CI Validation Commands
-Always run these before committing changes:
-
-```bash
-# These commands mirror what CI does and must pass
-dotnet format --verify-no-changes  # Verify code formatting
-dotnet build --configuration Release  # Verify build succeeds
-dotnet test --configuration Release   # Verify all tests pass
-```
-
-## Common Tasks and Troubleshooting
-
-### Working with the ConfigurationFilesGenerator
-- **Purpose:** Downloads NuGet analyzer packages and generates corresponding .editorconfig files
-- **Input:** Hardcoded list of analyzer packages in Program.cs
-- **Output:** src/files/analyzers/Analyzer.*.editorconfig files
-- **Timing:** Takes 15+ seconds to download and process all analyzer packages
-
-### Key Repository Locations
-```
-src/
-├── build/                              # MSBuild .props/.targets files
-├── buildTransitive/                    # Transitive MSBuild files
-├── buildMultiTargeting/                # Multi-targeting MSBuild files
-└── files/
-    ├── *.editorconfig                  # Static configuration files
-    ├── BannedSymbols.txt               # Banned API definitions
-    └── analyzers/                      # Generated analyzer configs
-tools/
-└── ConfigurationFilesGenerator/        # Tool to generate analyzer configs
-tests/
-└── Workleap.DotNet.CodingStandards.Tests/  # xUnit test project
-```
-
-### Dependencies and Requirements
-- **.NET 10.0 SDK:** Required for building (specified in global.json)
-- **.NET 8.0 Runtime:** Required for running tests (test project targets net8.0)
-- **PowerShell:** Required for Build.ps1 script
-- **GitVersion:** .NET tool for automatic versioning
-
-### Timing Expectations
-**CRITICAL: Never cancel these operations. Set timeouts appropriately:**
-- Tool restore: ~5 seconds
-- ConfigurationFilesGenerator: ~15 seconds
-- Full build: ~20 seconds
-- Tests: ~32 seconds (14 test cases)
-- Full CI pipeline: ~60 seconds total
-
-### Build Failures and Solutions
-- **"SDK not found" error:** Ensure .NET 10.0 SDK is installed and in PATH
-- **Test failures with runtime errors:** Ensure .NET 8.0 runtime is available
-- **GitVersion errors on feature branches:** Use manual version instead
-
-### Package Structure
-The NuGet package contains:
-- **MSBuild integration:** Automatic import of .props/.targets files
-- **EditorConfig files:** Code style and analyzer rules configuration
-- **Banned symbols:** API usage restrictions
-- **Analyzer dependencies:** Meziantou.Analyzer, StyleCop.Analyzers, Microsoft analyzers
-
-### Testing Strategy
-Tests use ProjectBuilder helper to:
-1. Create temporary test projects with NuGet.config
-2. Add the coding standards package
-3. Build projects and capture SARIF output
-4. Validate expected warnings/errors are present
-
-## References
-- Build script: Build.ps1 (PowerShell)
-- CI workflow: .github/workflows/ci.yml
-- Package definition: Workleap.DotNet.CodingStandards.nuspec
-- Test project: tests/Workleap.DotNet.CodingStandards.Tests/
+- Prefer file-scoped namespace declarations and single-line using directives.
+- Ensure that the final return statement of a method is on its own line.
+- Use pattern matching and switch expressions wherever possible.
+- Use `nameof` instead of string literals when referring to member names.
+- Always use `is null` or `is not null` instead of `== null` or `!= null`.
+- Trust the C# null annotations and don't add null checks when the type system says a value cannot be null.
+- Prefer `?.` if applicable (e.g. `scope?.Dispose()`).
+- Use `ObjectDisposedException.ThrowIf` where applicable.
+- When adding new unit tests, strongly prefer to add them to existing test code files rather than creating new code files.
+- When running tests, if possible use filters and check test run counts, or look at test logs, to ensure they actually ran.
+- Do not finish work with any tests commented out or disabled that were not previously commented out or disabled.
+- Do not update `global.json` file
+- When writing tests, do not emit "Act", "Arrange" or "Assert" comments.
+- There should be no trailing whitespace in any lines.
+- Add a blank line before XML documentation comments (`///`) when they follow other code (methods, properties, fields, etc.).
