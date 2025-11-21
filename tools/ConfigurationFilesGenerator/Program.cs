@@ -241,6 +241,9 @@ static async Task<Assembly[]> GetAnalyzerReferences(string packageId, NuGetVersi
     var filesGroupedByFolder = files.GroupBy(Path.GetDirectoryName).ToArray();
     foreach (var group in filesGroupedByFolder)
     {
+        // Analyzer can be in different folders (e.g., analyzers/dotnet/cs, analyzers/dotnet/vb, analyzers, etc.)
+        // We create a custom AssemblyLoadContext to resolve dependencies from the same folder or parent folders
+        // For instance, https://nuget.info/packages/Microsoft.CodeAnalysis.NetAnalyzers/10.0.100 needs files from analyzers/dotnet/cs and analyzers/dotnet to be resolved
         var context = new AssemblyLoadContext(null);
         context.Resolving += (AssemblyLoadContext _, AssemblyName assemblyName) =>
         {
