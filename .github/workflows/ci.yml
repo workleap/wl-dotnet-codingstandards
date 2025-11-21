@@ -36,24 +36,26 @@ jobs:
           feed-url: ${{ vars.GSOFTDEV_NUGET_SOURCE }}
           variables: ${{ toJSON(vars) }}
 
-      - name: Install Mono
-        shell: bash
-        run: |
-          apt-get update
-          apt-get install -y mono-complete
-
-      - uses: NuGet/setup-nuget@v2
-
       - run: ./Build.ps1
         shell: pwsh
         env:
           NUGET_SOURCE: ${{ vars.GSOFTDEV_NUGET_SOURCE }}
+
+      - name: Upload NuGet package
+        uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: nuget-package
+          path: .output/**/*
+          include-hidden-files: true
+          if-no-files-found: error
 
   linearb:
     needs: [main]
     uses: workleap/wl-reusable-workflows/.github/workflows/linearb-deployment.yml@main
     with:
       environment: development
+      cortexEntityIdOrTag: service-wl-dotnet-codingstandards
     permissions:
       id-token: write
       contents: read

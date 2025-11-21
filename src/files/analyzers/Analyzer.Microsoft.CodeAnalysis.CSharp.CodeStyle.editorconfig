@@ -535,6 +535,11 @@ dotnet_diagnostic.IDE0340.severity = silent
 # Enabled: True, Severity: silent
 dotnet_diagnostic.IDE0350.severity = silent
 
+# IDE0360: Simplify property accessor
+# Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0360
+# Enabled: True, Severity: silent
+dotnet_diagnostic.IDE0360.severity = silent
+
 # IDE1005: Delegate invocation can be simplified.
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide1005
 # Enabled: True, Severity: silent

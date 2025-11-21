@@ -405,6 +405,11 @@ dotnet_diagnostic.CA1514.severity = suggestion
 # Enabled: False, Severity: warning
 dotnet_diagnostic.CA1515.severity = none
 
+# CA1516: Use cross-platform intrinsics
+# Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1516
+# Enabled: True, Severity: suggestion
+dotnet_diagnostic.CA1516.severity = suggestion
+
 # CA1700: Do not name enum values 'Reserved'
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1700
 # Enabled: False, Severity: warning
@@ -801,6 +806,21 @@ dotnet_diagnostic.CA1871.severity = suggestion
 # Enabled: True, Severity: suggestion
 dotnet_diagnostic.CA1872.severity = suggestion
 
+# CA1873: Avoid potentially expensive logging
+# Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1873
+# Enabled: True, Severity: suggestion
+dotnet_diagnostic.CA1873.severity = suggestion
+
+# CA1874: Use 'Regex.IsMatch'
+# Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1874
+# Enabled: True, Severity: suggestion
+dotnet_diagnostic.CA1874.severity = suggestion
+
+# CA1875: Use 'Regex.Count'
+# Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1875
+# Enabled: True, Severity: suggestion
+dotnet_diagnostic.CA1875.severity = suggestion
+
 # CA2000: Dispose objects before losing scope
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2000
 # Enabled: False, Severity: warning
@@ -888,6 +908,21 @@ dotnet_diagnostic.CA2021.severity = warning
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2022
 # Enabled: True, Severity: warning
 dotnet_diagnostic.CA2022.severity = warning
+
+# CA2023: Invalid braces in message template
+# Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2023
+# Enabled: True, Severity: warning
+dotnet_diagnostic.CA2023.severity = warning
+
+# CA2024: Do not use 'StreamReader.EndOfStream' in async methods
+# Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2024
+# Enabled: True, Severity: warning
+dotnet_diagnostic.CA2024.severity = warning
+
+# CA2025: Do not pass 'IDisposable' instances into unawaited tasks
+# Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2025
+# Enabled: False, Severity: warning
+dotnet_diagnostic.CA2025.severity = none
 
 # CA2100: Review SQL queries for security vulnerabilities
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2100

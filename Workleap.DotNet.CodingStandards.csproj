@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <NoBuild>true</NoBuild>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <NoWarn>NU5128</NoWarn>
+    <NuSpecFile>Workleap.DotNet.CodingStandards.nuspec</NuSpecFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Remove="Workleap.DotNet.CodingStandards" />
+  </ItemGroup>
+</Project>

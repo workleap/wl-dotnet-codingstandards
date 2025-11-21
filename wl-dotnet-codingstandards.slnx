@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/tests/">
+    <Project Path="tests/Workleap.DotNet.CodingStandards.Tests/Workleap.DotNet.CodingStandards.Tests.csproj" />
+  </Folder>
+  <Project Path="tools/ConfigurationFilesGenerator/ConfigurationFilesGenerator.csproj" />
+</Solution>
