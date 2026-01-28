@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Meziantou.Framework.FullPath" Version="1.1.13" />
+    <PackageReference Include="Meziantou.Framework.FullPath" Version="1.1.14" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="10.0.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="5.0.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="5.0.0" />
