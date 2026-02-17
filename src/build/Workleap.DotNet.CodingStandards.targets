@@ -34,6 +34,8 @@
   </ItemGroup>
 
   <!-- When publishing a container with single-RID builds, use the native executable as the entrypoint (dotnet myapp.dll => myapp) -->
+  <!-- _ComputeContainerExecutionArgs: https://github.com/dotnet/sdk/blob/d963b10530b152cc453043bb2eaf72a357f6a45c/src/Containers/packaging/build/Microsoft.NET.Build.Containers.targets#L191 -->
+  <!-- ComputeContainerConfig: https://github.com/dotnet/sdk/blob/d963b10530b152cc453043bb2eaf72a357f6a45c/src/Containers/packaging/build/Microsoft.NET.Build.Containers.targets#L74 -->
   <Target Name="UpdateContainerCommand"
           AfterTargets="_ComputeContainerExecutionArgs"
           BeforeTargets="ComputeContainerConfig"
