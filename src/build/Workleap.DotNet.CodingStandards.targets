@@ -32,4 +32,18 @@
       Condition="$(BanNewtonsoftJsonSymbols) == 'true'"
       Visible="false" />
   </ItemGroup>
+
+  <!-- When publishing a container with single-RID builds, use the native executable as the entrypoint (dotnet myapp.dll => myapp) -->
+  <Target Name="UpdateContainerCommand"
+          AfterTargets="_ComputeContainerExecutionArgs"
+          BeforeTargets="ComputeContainerConfig"
+          Condition="'$(ContainerUseNativeCommand)' == 'true' AND '$(_IsSingleRIDBuild)' == 'true'">
+    <PropertyGroup>
+      <_ContainerNativeExecutableExtension Condition="'$(_ContainerIsTargetingWindows)' == 'true'">.exe</_ContainerNativeExecutableExtension>
+    </PropertyGroup>
+    <ItemGroup>
+      <ContainerAppCommand Remove="@(ContainerAppCommand)" />
+      <ContainerAppCommand Include="$(ContainerWorkingDirectory)$(AssemblyName)$(_ContainerNativeExecutableExtension)" />
+    </ItemGroup>
+  </Target>
 </Project>
