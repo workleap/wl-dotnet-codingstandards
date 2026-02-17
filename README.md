@@ -37,6 +37,14 @@ If you also have a `Directory.Build.props` file in your solution, you can remove
     </PropertyGroup>
     ```
 
+- Container publishing: when publishing a container with a single-RID build, the entrypoint is automatically set to the native executable (e.g. `/app/myapp`) instead of `dotnet myapp.dll`. This can be disabled by setting:
+
+    ```xml
+    <PropertyGroup>
+        <ContainerUseNativeCommand>false</ContainerUseNativeCommand>
+    </PropertyGroup>
+    ```
+
 ## What's NOT included
 
 - Enabling a specific or latest C# language version.

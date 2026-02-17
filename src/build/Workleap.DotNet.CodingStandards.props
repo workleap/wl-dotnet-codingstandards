@@ -55,6 +55,6 @@
 
   <!-- Container publishing -->
   <PropertyGroup>
-    <ContainerUseNativeCommand Condition="'$(ContainerUseNativeCommand)' == ''">false</ContainerUseNativeCommand>
+    <ContainerUseNativeCommand Condition="'$(ContainerUseNativeCommand)' == ''">true</ContainerUseNativeCommand>
   </PropertyGroup>
 </Project>

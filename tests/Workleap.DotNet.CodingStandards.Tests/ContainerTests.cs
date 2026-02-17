@@ -21,7 +21,6 @@ public sealed class ContainerTests(PackageFixture fixture, ITestOutputHelper tes
                 <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
                 <ImplicitUsings>enable</ImplicitUsings>
                 <Nullable>enable</Nullable>
-                <ContainerUseNativeCommand>true</ContainerUseNativeCommand>
                 <ContainerArchiveOutputPath>{archivePath}</ContainerArchiveOutputPath>
                 <ErrorLog>{ProjectBuilder.SarifFileName},version=2.1</ErrorLog>
               </PropertyGroup>
@@ -47,6 +46,48 @@ public sealed class ContainerTests(PackageFixture fixture, ITestOutputHelper tes
         testOutputHelper.WriteLine("Entrypoint: " + JsonSerializer.Serialize(entrypoint));
 
         Assert.Equal(["/app/test"], entrypoint);
+    }
+
+    [Fact]
+    public async Task PublishContainer_WithContainerUseNativeCommandDisabled_EntrypointUsesDotnet()
+    {
+        using var project = new ProjectBuilder(fixture, testOutputHelper);
+
+        var archivePath = Path.Combine(project.RootFolder, "container");
+
+        project.AddFile("test.csproj", $"""
+            <Project Sdk="Microsoft.NET.Sdk.Web">
+              <PropertyGroup>
+                <TargetFramework>net$(NETCoreAppMaximumVersion)</TargetFramework>
+                <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+                <ImplicitUsings>enable</ImplicitUsings>
+                <Nullable>enable</Nullable>
+                <ContainerUseNativeCommand>false</ContainerUseNativeCommand>
+                <ContainerArchiveOutputPath>{archivePath}</ContainerArchiveOutputPath>
+                <ErrorLog>{ProjectBuilder.SarifFileName},version=2.1</ErrorLog>
+              </PropertyGroup>
+
+              <ItemGroup>
+                <PackageReference Include="Workleap.DotNet.CodingStandards" Version="*" />
+              </ItemGroup>
+            </Project>
+            """);
+
+        project.AddFile("Program.cs",
+            """
+            var builder = WebApplication.CreateBuilder(args);
+            var app = builder.Build();
+            app.MapGet("/health", () => "ok");
+            app.Run();
+            """ + "\n");
+
+        var (publishExitCode, _) = await project.ExecuteDotnetCommand(["publish", "/t:PublishContainer"]);
+        Assert.Equal(0, publishExitCode);
+
+        var entrypoint = await GetEntrypointFromArchive(archivePath);
+        testOutputHelper.WriteLine("Entrypoint: " + JsonSerializer.Serialize(entrypoint));
+
+        Assert.Equal(["dotnet", "/app/test.dll"], entrypoint);
     }
 
     private static async Task<string[]> GetEntrypointFromArchive(string archiveDirectory)
