@@ -1,3 +1,4 @@
+using System.Text;
 using System.Xml.Linq;
 using Xunit.Abstractions;
 using System.Text.Json;
@@ -124,6 +125,26 @@ internal sealed class ProjectBuilder : IDisposable
 
         this._testOutputHelper.WriteLine("Sarif result:\n" + string.Join("\n", sarif.AllResults().Select(r => r.ToString())));
         return sarif;
+    }
+
+    public async Task<(int ExitCode, string Output)> ExecuteDotnetCommand(string[] arguments)
+    {
+        var stdOut = new StringBuilder();
+        var result = await Cli.Wrap("dotnet")
+            .WithWorkingDirectory(this._directory.FullPath)
+            .WithArguments(arguments)
+            .WithEnvironmentVariables(env => env.Set("CI", null).Set("GITHUB_ACTIONS", null))
+            .WithStandardOutputPipe(PipeTarget.Merge(
+                PipeTarget.ToDelegate(this._testOutputHelper.WriteLine),
+                PipeTarget.ToStringBuilder(stdOut)))
+            .WithStandardErrorPipe(PipeTarget.Merge(
+                PipeTarget.ToDelegate(this._testOutputHelper.WriteLine),
+                PipeTarget.ToStringBuilder(stdOut)))
+            .WithValidation(CommandResultValidation.None)
+            .ExecuteAsync();
+
+        this._testOutputHelper.WriteLine("Process exit code: " + result.ExitCode);
+        return (result.ExitCode, stdOut.ToString());
     }
 
     public void Dispose() => this._directory.Dispose();
