@@ -42,7 +42,7 @@ jobs:
           NUGET_SOURCE: ${{ vars.GSOFTDEV_NUGET_SOURCE }}
 
       - name: Upload NuGet package
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: nuget-package
