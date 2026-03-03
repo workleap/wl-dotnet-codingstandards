@@ -457,7 +457,7 @@ dotnet_diagnostic.MA0091.severity = none
 # Enabled: True, Severity: warning
 dotnet_diagnostic.MA0092.severity = none
 
-# MA0093: EventArgs should not be null
+# MA0093: EventArgs should not be null when raising an event
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0093.md
 # Enabled: True, Severity: warning
 dotnet_diagnostic.MA0093.severity = suggestion
@@ -817,11 +817,6 @@ dotnet_diagnostic.MA0163.severity = none
 # Enabled: True, Severity: warning
 dotnet_diagnostic.MA0164.severity = none
 
-# MA0165: Make interpolated string
-# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0165.md
-# Enabled: True, Severity: silent
-dotnet_diagnostic.MA0165.severity = none
-
 # MA0166: Forward the TimeProvider to methods that take one
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0166.md
 # Enabled: True, Severity: suggestion
@@ -886,4 +881,49 @@ dotnet_diagnostic.MA0177.severity = none
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0178.md
 # Enabled: True, Severity: suggestion
 dotnet_diagnostic.MA0178.severity = suggestion
+
+# MA0179: Use Attribute.IsDefined instead of GetCustomAttribute(s)
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0179.md
+# Enabled: True, Severity: suggestion
+dotnet_diagnostic.MA0179.severity = suggestion
+
+# MA0180: ILogger type parameter should match containing type
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0180.md
+# Enabled: False, Severity: warning
+dotnet_diagnostic.MA0180.severity = none
+
+# MA0181: Do not use cast
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0181.md
+# Enabled: False, Severity: suggestion
+dotnet_diagnostic.MA0181.severity = none
+
+# MA0182: Avoid unused internal types
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0182.md
+# Enabled: True, Severity: suggestion
+dotnet_diagnostic.MA0182.severity = suggestion
+
+# MA0183: string.Format should use a format string with placeholders
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0183.md
+# Enabled: True, Severity: warning
+dotnet_diagnostic.MA0183.severity = warning
+
+# MA0184: Do not use interpolated string without parameters
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0184.md
+# Enabled: True, Severity: silent
+dotnet_diagnostic.MA0184.severity = silent
+
+# MA0185: Simplify string.Create when all parameters are culture invariant
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0185.md
+# Enabled: True, Severity: suggestion
+dotnet_diagnostic.MA0185.severity = suggestion
+
+# MA0186: Equals method should use [NotNullWhen(true)] on the parameter
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0186.md
+# Enabled: False, Severity: suggestion
+dotnet_diagnostic.MA0186.severity = none
+
+# MA0186: TryGetValue method should use [MaybeNullWhen(false)] on the value parameter
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0186.md
+# Enabled: False, Severity: suggestion
+dotnet_diagnostic.MA0186.severity = none
 
