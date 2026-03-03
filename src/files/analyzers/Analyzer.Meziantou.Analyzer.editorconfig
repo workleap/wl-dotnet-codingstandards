@@ -902,7 +902,7 @@ dotnet_diagnostic.MA0181.severity = none
 # Enabled: True, Severity: suggestion
 dotnet_diagnostic.MA0182.severity = suggestion
 
-# MA0183: string.Format should use a format string with placeholders
+# MA0183: The format string should use placeholders
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0183.md
 # Enabled: True, Severity: warning
 dotnet_diagnostic.MA0183.severity = warning
@@ -926,4 +926,9 @@ dotnet_diagnostic.MA0186.severity = none
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0186.md
 # Enabled: False, Severity: suggestion
 dotnet_diagnostic.MA0186.severity = none
+
+# MA0187: Use constructor injection instead of [Inject] attribute
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0187.md
+# Enabled: False, Severity: suggestion
+dotnet_diagnostic.MA0187.severity = none
 
