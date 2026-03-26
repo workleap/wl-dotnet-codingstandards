@@ -13,9 +13,9 @@
     <copyright>Copyright © Workleap</copyright>
     <repository type="git" url="$RepositoryUrl$" commit="$RepositoryCommit$" branch="$RepositoryBranch$" />
     <dependencies>
-      <dependency id="Meziantou.Analyzer" version="3.0.19" />
+      <dependency id="Meziantou.Analyzer" version="3.0.27" />
       <dependency id="Microsoft.CodeAnalysis.BannedApiAnalyzers" version="3.3.4" />
-      <dependency id="Microsoft.CodeAnalysis.NetAnalyzers" version="10.0.103" />
+      <dependency id="Microsoft.CodeAnalysis.NetAnalyzers" version="10.0.201" />
       <dependency id="StyleCop.Analyzers" version="1.2.0-beta.556" />
     </dependencies>
   </metadata>

@@ -540,6 +540,16 @@ dotnet_diagnostic.IDE0350.severity = silent
 # Enabled: True, Severity: silent
 dotnet_diagnostic.IDE0360.severity = silent
 
+# IDE0370: Remove unnecessary suppression
+# Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0370
+# Enabled: True, Severity: silent
+dotnet_diagnostic.IDE0370.severity = suggestion
+
+# IDE0380: Remove unnecessary 'unsafe' modifier
+# Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0380
+# Enabled: True, Severity: silent
+dotnet_diagnostic.IDE0380.severity = suggestion
+
 # IDE1005: Delegate invocation can be simplified.
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide1005
 # Enabled: True, Severity: silent
