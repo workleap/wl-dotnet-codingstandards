@@ -90,6 +90,15 @@ await Parallel.ForEachAsync(packages, async (item, cancellationToken) =>
             }
 
             sb.AppendLine($"dotnet_diagnostic.{rule.Id}.severity = {GetSeverity(severity)}");
+
+            if (currentRuleConfiguration?.Options.Length > 0)
+            {
+                foreach (var option in currentRuleConfiguration.Options)
+                {
+                    sb.AppendLine(option);
+                }
+            }
+
             sb.AppendLine();
         }
 
@@ -219,7 +228,8 @@ static FullPath GetRootFolderPath()
     var path = FullPath.CurrentDirectory();
     while (!path.IsEmpty)
     {
-        if (Directory.Exists(path / ".git"))
+        var gitPath = path / ".git";
+        if (Directory.Exists(gitPath) || File.Exists(gitPath))
         {
             return path;
         }
@@ -359,6 +369,7 @@ static (AnalyzerConfiguration[] Rules, string[] Unknowns) GetConfiguration(FullP
 {
     var rules = new List<AnalyzerConfiguration>();
     var unknowns = new List<string>();
+    var pendingOptions = new Dictionary<string, List<string>>(StringComparer.Ordinal);
 
     var currentComment = new List<string>();
     try
@@ -418,10 +429,24 @@ static (AnalyzerConfiguration[] Rules, string[] Unknowns) GetConfiguration(FullP
                         diagnosticSeverity = severity;
                     }
 
-                    rules.Add(new AnalyzerConfiguration(match.Groups["RuleId"].Value, currentComment.Skip(1).ToArray(), diagnosticSeverity));
+                    rules.Add(new AnalyzerConfiguration(match.Groups["RuleId"].Value, currentComment.Skip(1).ToArray(), diagnosticSeverity, []));
                 }
                 else
                 {
+                    var optionMatch = Regex.Match(line, @"^dotnet_code_quality\.(?<RuleId>[^.\s]+)\.");
+                    if (optionMatch.Success)
+                    {
+                        var ruleId = optionMatch.Groups["RuleId"].Value;
+                        if (!pendingOptions.TryGetValue(ruleId, out var list))
+                        {
+                            list = [];
+                            pendingOptions[ruleId] = list;
+                        }
+
+                        list.Add(line);
+                        continue;
+                    }
+
                     foreach (var comment in currentComment)
                     {
                         unknowns.Add(comment);
@@ -446,9 +471,22 @@ static (AnalyzerConfiguration[] Rules, string[] Unknowns) GetConfiguration(FullP
     {
     }
 
+    for (var i = 0; i < rules.Count; i++)
+    {
+        if (pendingOptions.Remove(rules[i].Id, out var options))
+        {
+            rules[i] = rules[i] with { Options = [.. options] };
+        }
+    }
+
+    foreach (var orphanedOption in pendingOptions.Values.SelectMany(list => list))
+    {
+        unknowns.Add(orphanedOption);
+    }
+
     return (rules.ToArray(), unknowns.ToArray());
 }
 
-internal sealed record AnalyzerConfiguration(string Id, string[] Comments, DiagnosticSeverity? Severity);
+internal sealed record AnalyzerConfiguration(string Id, string[] Comments, DiagnosticSeverity? Severity, string[] Options);
 
 internal sealed record AnalyzerRule(string Id, string Title, string? Url, bool Enabled, DiagnosticSeverity DefaultSeverity, DiagnosticSeverity? DefaultEffectiveSeverity);
