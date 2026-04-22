@@ -2,6 +2,9 @@
 is_global = true
 global_level = 0
 
+MA0048.only_validate_first_type = true
+MA0048.allow_oft_for_all_generic_types = true
+
 # MA0001: StringComparison is missing
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0001.md
 # Enabled: True, Severity: suggestion
@@ -237,8 +240,6 @@ dotnet_diagnostic.MA0047.severity = none
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0048.md
 # Enabled: True, Severity: warning
 dotnet_diagnostic.MA0048.severity = warning
-MA0048.only_validate_first_type = true
-MA0048.allow_oft_for_all_generic_types = true
 
 # MA0049: Type name should not match containing namespace
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0049.md
