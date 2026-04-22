@@ -96,7 +96,7 @@ dotnet_diagnostic.MA0018.severity = none
 # MA0019: Use EventArgs.Empty
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0019.md
 # Enabled: True, Severity: warning
-dotnet_diagnostic.MA0019.severity = suggestion
+dotnet_diagnostic.MA0019.severity = warning
 
 # MA0020: Use direct methods instead of LINQ methods
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0020.md
@@ -151,7 +151,7 @@ dotnet_diagnostic.MA0029.severity = suggestion
 # MA0030: Remove useless OrderBy call
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0030.md
 # Enabled: True, Severity: warning
-dotnet_diagnostic.MA0030.severity = suggestion
+dotnet_diagnostic.MA0030.severity = warning
 
 # MA0031: Optimize Enumerable.Count() usage
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0031.md
@@ -236,7 +236,9 @@ dotnet_diagnostic.MA0047.severity = none
 # MA0048: File name must match type name
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0048.md
 # Enabled: True, Severity: warning
-dotnet_diagnostic.MA0048.severity = none
+dotnet_diagnostic.MA0048.severity = warning
+MA0048.only_validate_first_type = true
+MA0048.allow_oft_for_all_generic_types = true
 
 # MA0049: Type name should not match containing namespace
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0049.md
@@ -246,7 +248,7 @@ dotnet_diagnostic.MA0049.severity = none
 # MA0050: Validate arguments correctly in iterator methods
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0050.md
 # Enabled: True, Severity: suggestion
-dotnet_diagnostic.MA0050.severity = warning
+dotnet_diagnostic.MA0050.severity = suggestion
 
 # MA0051: Method is too long
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0051.md
@@ -256,7 +258,7 @@ dotnet_diagnostic.MA0051.severity = none
 # MA0052: Replace constant Enum.ToString with nameof
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0052.md
 # Enabled: True, Severity: suggestion
-dotnet_diagnostic.MA0052.severity = suggestion
+dotnet_diagnostic.MA0052.severity = warning
 
 # MA0053: Make class or record sealed
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0053.md
@@ -311,7 +313,7 @@ dotnet_diagnostic.MA0062.severity = none
 # MA0063: Use Where before OrderBy
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0063.md
 # Enabled: True, Severity: suggestion
-dotnet_diagnostic.MA0063.severity = suggestion
+dotnet_diagnostic.MA0063.severity = warning
 
 # MA0064: Avoid locking on publicly accessible instance
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0064.md
@@ -391,7 +393,7 @@ dotnet_diagnostic.MA0078.severity = none
 # MA0079: Forward the CancellationToken using .WithCancellation()
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0079.md
 # Enabled: True, Severity: suggestion
-dotnet_diagnostic.MA0079.severity = warning
+dotnet_diagnostic.MA0079.severity = suggestion
 
 # MA0080: Use a cancellation token using .WithCancellation()
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0080.md
@@ -411,7 +413,7 @@ dotnet_diagnostic.MA0082.severity = warning
 # MA0083: ConstructorArgument parameters should exist in constructors
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0083.md
 # Enabled: True, Severity: warning
-dotnet_diagnostic.MA0083.severity = none
+dotnet_diagnostic.MA0083.severity = warning
 
 # MA0084: Local variables should not hide other symbols
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0084.md
@@ -431,12 +433,12 @@ dotnet_diagnostic.MA0086.severity = warning
 # MA0087: Parameters with [DefaultParameterValue] attributes should also be marked [Optional]
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0087.md
 # Enabled: True, Severity: warning
-dotnet_diagnostic.MA0087.severity = suggestion
+dotnet_diagnostic.MA0087.severity = warning
 
 # MA0088: Use [DefaultParameterValue] instead of [DefaultValue]
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0088.md
 # Enabled: True, Severity: warning
-dotnet_diagnostic.MA0088.severity = suggestion
+dotnet_diagnostic.MA0088.severity = warning
 
 # MA0089: Optimize string method usage
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0089.md
@@ -471,12 +473,12 @@ dotnet_diagnostic.MA0094.severity = warning
 # MA0095: A class that implements IEquatable<T> should override Equals(object)
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0095.md
 # Enabled: True, Severity: warning
-dotnet_diagnostic.MA0095.severity = none
+dotnet_diagnostic.MA0095.severity = warning
 
 # MA0096: A class that implements IComparable<T> should also implement IEquatable<T>
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0096.md
 # Enabled: True, Severity: warning
-dotnet_diagnostic.MA0096.severity = none
+dotnet_diagnostic.MA0096.severity = warning
 
 # MA0097: A class that implements IComparable<T> or IComparable should override comparison operators
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0097.md
@@ -511,7 +513,7 @@ dotnet_diagnostic.MA0102.severity = none
 # MA0103: Use SequenceEqual instead of equality operator
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0103.md
 # Enabled: True, Severity: warning
-dotnet_diagnostic.MA0103.severity = suggestion
+dotnet_diagnostic.MA0103.severity = warning
 
 # MA0104: Do not create a type with a name from the BCL
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0104.md
@@ -521,7 +523,7 @@ dotnet_diagnostic.MA0104.severity = none
 # MA0105: Use the lambda parameters instead of using a closure
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0105.md
 # Enabled: True, Severity: suggestion
-dotnet_diagnostic.MA0105.severity = none
+dotnet_diagnostic.MA0105.severity = suggestion
 
 # MA0106: Avoid closure by using an overload with the 'factoryArgument' parameter
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0106.md
@@ -731,7 +733,7 @@ dotnet_diagnostic.MA0146.severity = warning
 # MA0147: Avoid async void method for delegate
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0147.md
 # Enabled: True, Severity: warning
-dotnet_diagnostic.MA0147.severity = warning
+dotnet_diagnostic.MA0147.severity = none
 
 # MA0148: Use pattern matching instead of equality operators for discrete value
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0148.md
@@ -881,7 +883,7 @@ dotnet_diagnostic.MA0177.severity = none
 # MA0178: Use TimeSpan.Zero instead of TimeSpan.FromXXX(0)
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0178.md
 # Enabled: True, Severity: suggestion
-dotnet_diagnostic.MA0178.severity = suggestion
+dotnet_diagnostic.MA0178.severity = warning
 
 # MA0179: Use Attribute.IsDefined instead of GetCustomAttribute(s)
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0179.md

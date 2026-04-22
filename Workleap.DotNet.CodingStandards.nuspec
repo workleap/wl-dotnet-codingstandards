@@ -16,7 +16,6 @@
       <dependency id="Meziantou.Analyzer" version="3.0.28" />
       <dependency id="Microsoft.CodeAnalysis.BannedApiAnalyzers" version="3.3.4" />
       <dependency id="Microsoft.CodeAnalysis.NetAnalyzers" version="10.0.201" />
-      <dependency id="StyleCop.Analyzers" version="1.2.0-beta.556" />
     </dependencies>
   </metadata>
   <files>

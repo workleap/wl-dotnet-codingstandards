@@ -485,3 +485,4 @@ $RECYCLE.BIN/
 
 # Build output
 .output/
+.claude/settings.local.json
