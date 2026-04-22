@@ -285,12 +285,12 @@ dotnet_diagnostic.CA1308.severity = none
 # CA1309: Use ordinal string comparison
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1309
 # Enabled: True, Severity: silent
-dotnet_diagnostic.CA1309.severity = suggestion
+dotnet_diagnostic.CA1309.severity = warning
 
 # CA1310: Specify StringComparison for correctness
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1310
 # Enabled: True, Severity: silent
-dotnet_diagnostic.CA1310.severity = suggestion
+dotnet_diagnostic.CA1310.severity = warning
 
 # CA1311: Specify a culture or use an invariant version
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1311
@@ -378,7 +378,7 @@ dotnet_diagnostic.CA1509.severity = none
 # CA1510: Use ArgumentNullException throw helper
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1510
 # Enabled: True, Severity: suggestion
-dotnet_diagnostic.CA1510.severity = suggestion
+dotnet_diagnostic.CA1510.severity = warning
 
 # CA1511: Use ArgumentException throw helper
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1511
@@ -799,7 +799,7 @@ dotnet_diagnostic.CA1870.severity = warning
 # CA1871: Do not pass a nullable struct to 'ArgumentNullException.ThrowIfNull'
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1871
 # Enabled: True, Severity: suggestion
-dotnet_diagnostic.CA1871.severity = suggestion
+dotnet_diagnostic.CA1871.severity = warning
 
 # CA1872: Prefer 'Convert.ToHexString' and 'Convert.ToHexStringLower' over call chains based on 'BitConverter.ToString'
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1872
@@ -952,7 +952,7 @@ dotnet_diagnostic.CA2200.severity = warning
 # CA2201: Do not raise reserved exception types
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2201
 # Enabled: True, Severity: silent
-dotnet_diagnostic.CA2201.severity = suggestion
+dotnet_diagnostic.CA2201.severity = warning
 
 # CA2207: Initialize value type static fields inline
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2207
