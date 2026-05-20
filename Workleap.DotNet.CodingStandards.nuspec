@@ -15,7 +15,7 @@
     <dependencies>
       <dependency id="Meziantou.Analyzer" version="3.0.29" />
       <dependency id="Microsoft.CodeAnalysis.BannedApiAnalyzers" version="3.3.4" />
-      <dependency id="Microsoft.CodeAnalysis.NetAnalyzers" version="10.0.201" />
+      <dependency id="Microsoft.CodeAnalysis.NetAnalyzers" version="10.0.300" />
     </dependencies>
   </metadata>
   <files>
