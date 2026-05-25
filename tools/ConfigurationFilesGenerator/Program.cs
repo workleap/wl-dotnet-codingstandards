@@ -160,7 +160,10 @@ async Task<(string Id, NuGetVersion Version)[]> GetAllReferencedNuGetPackages()
         await ListAllPackageDependencies(packageIdentity, [repository], NuGetFramework.AnyFramework, cache, NullLogger.Instance, foundPackages, CancellationToken.None);
     }
 
-    return foundPackages.Select(p => (p.Id, p.Version)).ToArray();
+    return foundPackages
+        .GroupBy(package => package.Id, StringComparer.OrdinalIgnoreCase)
+        .Select(group => (group.Key, group.MaxBy(package => package.Version)!.Version))
+        .ToArray();
 
     static async Task ListAllPackageDependencies(
         PackageIdentity package,
