@@ -49,13 +49,3 @@ jobs:
           path: .output/**/*
           include-hidden-files: true
           if-no-files-found: error
-
-  linearb:
-    needs: [main]
-    uses: workleap/wl-reusable-workflows/.github/workflows/linearb-deployment.yml@main
-    with:
-      environment: development
-      cortexEntityIdOrTag: service-wl-dotnet-codingstandards
-    permissions:
-      id-token: write
-      contents: read
