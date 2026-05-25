@@ -1171,6 +1171,11 @@ dotnet_diagnostic.CA2264.severity = warning
 # Enabled: True, Severity: warning
 dotnet_diagnostic.CA2265.severity = warning
 
+# CA2266: File-based program entry point should start with '#!'
+# Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2266
+# Enabled: True, Severity: warning
+dotnet_diagnostic.CA2266.severity = warning
+
 # CA2300: Do not use insecure deserializer BinaryFormatter
 # Help link: https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2300
 # Enabled: False, Severity: warning
