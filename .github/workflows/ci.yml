@@ -49,14 +49,3 @@ jobs:
           path: .output/**/*
           include-hidden-files: true
           if-no-files-found: error
-
-  linearb:
-    needs: [main]
-    if: ${{ !startsWith(github.head_ref || github.ref_name, 'renovate/') }}
-    uses: workleap/wl-reusable-workflows/.github/workflows/linearb-deployment.yml@main
-    with:
-      environment: development
-      cortexEntityIdOrTag: service-wl-dotnet-codingstandards
-    permissions:
-      id-token: write
-      contents: read
