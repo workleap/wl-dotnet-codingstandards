@@ -125,7 +125,7 @@ await Parallel.ForEachAsync(packages, async (item, cancellationToken) =>
                 DiagnosticSeverity.Info => "suggestion",
                 DiagnosticSeverity.Warning => "warning",
                 DiagnosticSeverity.Error => "error",
-                _ => throw new Exception($"Severity '{severity}' is not supported"),
+                _ => throw new ArgumentOutOfRangeException(nameof(severity), severity, $"Severity '{severity}' is not supported"),
             };
         }
     }
@@ -181,7 +181,7 @@ async Task<(string Id, NuGetVersion Version)[]> GetAllReferencedNuGetPackages()
 
         foreach (var repository in repositories)
         {
-            var dependencyInfoResource = await repository.GetResourceAsync<DependencyInfoResource>();
+            var dependencyInfoResource = await repository.GetResourceAsync<DependencyInfoResource>(cancellationToken);
             var dependencyInfo = await dependencyInfoResource.ResolvePackage(package, framework, cache, logger, cancellationToken);
 
             if (dependencyInfo == null)
@@ -329,7 +329,7 @@ static async Task<DownloadResourceResult> DownloadNuGetPackage(string packageId,
 
     var cache = new SourceCacheContext();
     var repository = Repository.Factory.GetCoreV3(source);
-    var resource = await repository.GetResourceAsync<FindPackageByIdResource>();
+    var resource = await repository.GetResourceAsync<FindPackageByIdResource>(cancellationToken);
 
     if (version is null)
     {
@@ -489,7 +489,3 @@ static (AnalyzerConfiguration[] Rules, string[] Unknowns) GetConfiguration(FullP
 
     return (rules.ToArray(), unknowns.ToArray());
 }
-
-internal sealed record AnalyzerConfiguration(string Id, string[] Comments, DiagnosticSeverity? Severity, string[] Options);
-
-internal sealed record AnalyzerRule(string Id, string Title, string? Url, bool Enabled, DiagnosticSeverity DefaultSeverity, DiagnosticSeverity? DefaultEffectiveSeverity);
