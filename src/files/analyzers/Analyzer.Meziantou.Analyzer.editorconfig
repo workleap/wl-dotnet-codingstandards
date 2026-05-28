@@ -958,7 +958,7 @@ dotnet_diagnostic.MA0191.severity = none
 
 # MA0192: Use HasFlag instead of bitwise checks
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0192.md
-# Enabled: False, Severity: suggestion
+# Enabled: True, Severity: suggestion
 dotnet_diagnostic.MA0192.severity = none
 
 # MA0193: Use an overload with a MidpointRounding argument
@@ -1005,4 +1005,9 @@ dotnet_diagnostic.MA0200.severity = suggestion
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0201.md
 # Enabled: True, Severity: warning
 dotnet_diagnostic.MA0201.severity = warning
+
+# MA0202: Conditional compilation branches have identical code
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0202.md
+# Enabled: True, Severity: warning
+dotnet_diagnostic.MA0202.severity = warning
 
