@@ -1,7 +1,6 @@
 using System.Formats.Tar;
 using System.Text.Json;
 using Workleap.DotNet.CodingStandards.Tests.Helpers;
-using Xunit.Abstractions;
 
 namespace Workleap.DotNet.CodingStandards.Tests;
 
@@ -99,7 +98,7 @@ public sealed class ContainerTests(PackageFixture fixture, ITestOutputHelper tes
         await using var fileStream = File.OpenRead(tarGzFile);
         await using var tarReader = new TarReader(fileStream);
 
-        while (await tarReader.GetNextEntryAsync() is { } entry)
+        while (await tarReader.GetNextEntryAsync(cancellationToken: TestContext.Current.CancellationToken) is { } entry)
         {
             if (entry.DataStream == null || !entry.Name.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
             {
@@ -107,7 +106,7 @@ public sealed class ContainerTests(PackageFixture fixture, ITestOutputHelper tes
             }
 
             using var reader = new StreamReader(entry.DataStream, leaveOpen: true);
-            jsonFiles[entry.Name] = await reader.ReadToEndAsync();
+            jsonFiles[entry.Name] = await reader.ReadToEndAsync(TestContext.Current.CancellationToken);
         }
 
         // Parse Docker manifest -> config

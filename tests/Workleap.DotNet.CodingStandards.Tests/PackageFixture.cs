@@ -10,7 +10,7 @@ public sealed class PackageFixture : IAsyncLifetime
 
     public string PackageDirectory => this._packageDirectory.FullPath;
 
-    public async Task InitializeAsync()
+    public async ValueTask InitializeAsync()
     {
         var projectPath = Path.Combine(PathHelpers.GetRootDirectory(), "Workleap.DotNet.CodingStandards.csproj");
         string[] args = ["pack", projectPath, "-p:NuspecProperties=version=999.9.9", "--output", this._packageDirectory.FullPath];
@@ -20,7 +20,7 @@ public sealed class PackageFixture : IAsyncLifetime
              .WithStandardOutputPipe(PipeTarget.ToStringBuilder(output))
              .WithStandardErrorPipe(PipeTarget.ToStringBuilder(output))
              .WithValidation(CommandResultValidation.None)
-             .ExecuteAsync();
+             .ExecuteAsync(TestContext.Current.CancellationToken);
 
         if (!result.IsSuccess)
         {
@@ -28,9 +28,9 @@ public sealed class PackageFixture : IAsyncLifetime
         }
     }
 
-    public Task DisposeAsync()
+    public ValueTask DisposeAsync()
     {
         this._packageDirectory.Dispose();
-        return Task.CompletedTask;
+        return ValueTask.CompletedTask;
     }
 }

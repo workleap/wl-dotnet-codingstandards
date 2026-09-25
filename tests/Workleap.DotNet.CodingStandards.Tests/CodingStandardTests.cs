@@ -1,7 +1,6 @@
 using System.IO.Compression;
 using System.Reflection.PortableExecutable;
 using Workleap.DotNet.CodingStandards.Tests.Helpers;
-using Xunit.Abstractions;
 
 namespace Workleap.DotNet.CodingStandards.Tests;
 
@@ -263,7 +262,7 @@ public sealed class CodingStandardTests(PackageFixture fixture, ITestOutputHelpe
         var files = Directory.GetFiles(Path.Combine(project.RootFolder, "bin", "Release"));
         Assert.Single(files); // Only the .nupkg should be generated
         var nupkg = files.Single(f => f.EndsWith(".nupkg", StringComparison.OrdinalIgnoreCase));
-        await ZipFile.ExtractToDirectoryAsync(nupkg, extractedPath);
+        await ZipFile.ExtractToDirectoryAsync(nupkg, extractedPath, TestContext.Current.CancellationToken);
 
         var outputFiles = Directory.GetFiles(extractedPath, "*", SearchOption.AllDirectories);
         await AssertPdbIsEmbedded(outputFiles);
