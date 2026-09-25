@@ -1,9 +1,7 @@
 using System.Text;
 using System.Xml.Linq;
-using Xunit.Abstractions;
 using System.Text.Json;
 using CliWrap;
-using Xunit.Sdk;
 
 namespace Workleap.DotNet.CodingStandards.Tests.Helpers;
 
@@ -114,11 +112,11 @@ internal sealed class ProjectBuilder : IDisposable
             .WithStandardOutputPipe(PipeTarget.ToDelegate(this._testOutputHelper.WriteLine))
             .WithStandardErrorPipe(PipeTarget.ToDelegate(this._testOutputHelper.WriteLine))
             .WithValidation(CommandResultValidation.None)
-            .ExecuteAsync();
+            .ExecuteAsync(TestContext.Current.CancellationToken);
 
         this._testOutputHelper.WriteLine("Process exit code: " + result.ExitCode);
 
-        var bytes = await File.ReadAllBytesAsync(this._directory.GetPath(SarifFileName));
+        var bytes = await File.ReadAllBytesAsync(this._directory.GetPath(SarifFileName), TestContext.Current.CancellationToken);
         var sarif = JsonSerializer.Deserialize<SarifFile>(bytes) ?? throw new InvalidOperationException("The sarif file is invalid");
 
         this.AppendAdditionalResult(sarif);
@@ -141,7 +139,7 @@ internal sealed class ProjectBuilder : IDisposable
                 PipeTarget.ToDelegate(this._testOutputHelper.WriteLine),
                 PipeTarget.ToStringBuilder(stdOut)))
             .WithValidation(CommandResultValidation.None)
-            .ExecuteAsync();
+            .ExecuteAsync(TestContext.Current.CancellationToken);
 
         this._testOutputHelper.WriteLine("Process exit code: " + result.ExitCode);
         return (result.ExitCode, stdOut.ToString());
@@ -151,12 +149,12 @@ internal sealed class ProjectBuilder : IDisposable
 
     private void AppendAdditionalResult(SarifFile sarifFile)
     {
-        if (this._testOutputHelper is not TestOutputHelper testOutputHelper || sarifFile.Runs == null)
+        if (sarifFile.Runs == null)
         {
             return;
         }
 
-        var outputLines = testOutputHelper.Output.Split(Environment.NewLine);
+        var outputLines = this._testOutputHelper.Output.Split(Environment.NewLine);
         var customRunResults = new List<SarifFileRunResult>();
 
         // These rules (for nuget package vulnerability) are not parsed in the sarif file automatically

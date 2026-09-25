@@ -116,7 +116,7 @@ dotnet_diagnostic.MA0021.severity = none
 # Enabled: True, Severity: warning
 dotnet_diagnostic.MA0022.severity = warning
 
-# MA0023: Add RegexOptions.ExplicitCapture
+# MA0023: Use RegexOptions.ExplicitCapture or named groups
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0023.md
 # Enabled: True, Severity: warning
 dotnet_diagnostic.MA0023.severity = suggestion
@@ -296,7 +296,7 @@ dotnet_diagnostic.MA0058.severity = none
 # Enabled: True, Severity: suggestion
 dotnet_diagnostic.MA0059.severity = none
 
-# MA0060: The value returned by Stream.Read/Stream.ReadAsync is not used
+# MA0060: The return value of the method should be used
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0060.md
 # Enabled: True, Severity: warning
 dotnet_diagnostic.MA0060.severity = warning
@@ -926,11 +926,6 @@ dotnet_diagnostic.MA0185.severity = suggestion
 # Enabled: False, Severity: suggestion
 dotnet_diagnostic.MA0186.severity = none
 
-# MA0186: TryGetValue method should use [MaybeNullWhen(false)] on the value parameter
-# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0186.md
-# Enabled: False, Severity: suggestion
-dotnet_diagnostic.MA0186.severity = none
-
 # MA0187: Use constructor injection instead of [Inject] attribute
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0187.md
 # Enabled: False, Severity: suggestion
@@ -1010,4 +1005,199 @@ dotnet_diagnostic.MA0201.severity = warning
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0202.md
 # Enabled: True, Severity: warning
 dotnet_diagnostic.MA0202.severity = warning
+
+# MA0203: Do not use return tag for void method
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0203.md
+# Enabled: True, Severity: warning
+dotnet_diagnostic.MA0203.severity = warning
+
+# MA0204: Remove unnecessary partial modifier
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0204.md
+# Enabled: True, Severity: suggestion
+dotnet_diagnostic.MA0204.severity = suggestion
+
+# MA0205: Use exclusive or operator
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0205.md
+# Enabled: True, Severity: suggestion
+dotnet_diagnostic.MA0205.severity = suggestion
+
+# MA0206: Remove unnecessary braces in type declaration
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0206.md
+# Enabled: True, Severity: suggestion
+dotnet_diagnostic.MA0206.severity = suggestion
+
+# MA0207: [FixedAddressValueType] fields must be static
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0207.md
+# Enabled: True, Severity: warning
+dotnet_diagnostic.MA0207.severity = warning
+
+# MA0208: [FixedAddressValueType] fields must be value types
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0208.md
+# Enabled: True, Severity: warning
+dotnet_diagnostic.MA0208.severity = warning
+
+# MA0209: Use in keyword for in parameter
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0209.md
+# Enabled: False, Severity: suggestion
+dotnet_diagnostic.MA0209.severity = none
+
+# MA0210: Use in keyword to call the in overload
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0210.md
+# Enabled: False, Severity: suggestion
+dotnet_diagnostic.MA0210.severity = none
+
+# MA0211: Use multi-line syntax for XML summary comments
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0211.md
+# Enabled: False, Severity: suggestion
+dotnet_diagnostic.MA0211.severity = none
+
+# MA0213: Simplify negated boolean expression
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0213.md
+# Enabled: False, Severity: suggestion
+dotnet_diagnostic.MA0213.severity = none
+
+# MA0214: Use 'await' instead of returning the task
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0214.md
+# Enabled: False, Severity: suggestion
+dotnet_diagnostic.MA0214.severity = none
+
+# MA0215: Return the task instead of awaiting it
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0215.md
+# Enabled: False, Severity: suggestion
+dotnet_diagnostic.MA0215.severity = none
+
+# MA0216: Remove unnecessary closed modifier
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0216.md
+# Enabled: True, Severity: suggestion
+dotnet_diagnostic.MA0216.severity = suggestion
+
+# MA0217: Use a static lambda
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0217.md
+# Enabled: False, Severity: suggestion
+dotnet_diagnostic.MA0217.severity = none
+
+# MA0218: The language attribute is empty
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0218.md
+# Enabled: True, Severity: suggestion
+dotnet_diagnostic.MA0218.severity = suggestion
+
+# MA0219: Set the language attribute in XML comment
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0219.md
+# Enabled: True, Severity: silent
+dotnet_diagnostic.MA0219.severity = silent
+
+# MA0220: The configured regular expression is not valid
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0220.md
+# Enabled: True, Severity: warning
+dotnet_diagnostic.MA0220.severity = warning
+
+# MA0221: TryGetValue method should use [MaybeNullWhen(false)] on the value parameter
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0221.md
+# Enabled: False, Severity: suggestion
+dotnet_diagnostic.MA0221.severity = none
+
+# MA0222: JsonSourceGenerationOptions should set RespectNullableAnnotations
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0222.md
+# Enabled: False, Severity: warning
+dotnet_diagnostic.MA0222.severity = none
+
+# MA0223: JsonSourceGenerationOptions should set RespectRequiredConstructorParameters
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0223.md
+# Enabled: False, Severity: warning
+dotnet_diagnostic.MA0223.severity = none
+
+# MA0224: JsonSerializerOptions should set RespectNullableAnnotations
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0224.md
+# Enabled: False, Severity: warning
+dotnet_diagnostic.MA0224.severity = none
+
+# MA0225: JsonSerializerOptions should set RespectRequiredConstructorParameters
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0225.md
+# Enabled: False, Severity: warning
+dotnet_diagnostic.MA0225.severity = none
+
+# MA0226: EventSource class should be sealed
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0226.md
+# Enabled: False, Severity: warning
+dotnet_diagnostic.MA0226.severity = none
+
+# MA0227: Avoid using 'Enumerable.Contains' on a set
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0227.md
+# Enabled: False, Severity: warning
+dotnet_diagnostic.MA0227.severity = none
+
+# MA0228: The event id of an EventSource must be greater than zero
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0228.md
+# Enabled: False, Severity: warning
+dotnet_diagnostic.MA0228.severity = none
+
+# MA0229: The event id of an EventSource is already used by another event
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0229.md
+# Enabled: False, Severity: warning
+dotnet_diagnostic.MA0229.severity = none
+
+# MA0230: The event name of an EventSource is already used by another event
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0230.md
+# Enabled: False, Severity: warning
+dotnet_diagnostic.MA0230.severity = none
+
+# MA0231: An EventSource event method must not be static
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0231.md
+# Enabled: False, Severity: warning
+dotnet_diagnostic.MA0231.severity = none
+
+# MA0232: An EventSource event method must not be an explicit interface implementation
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0232.md
+# Enabled: False, Severity: warning
+dotnet_diagnostic.MA0232.severity = none
+
+# MA0233: An abstract EventSource must not declare event methods
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0233.md
+# Enabled: False, Severity: warning
+dotnet_diagnostic.MA0233.severity = none
+
+# MA0234: The event id written by an EventSource event method must match its [Event] attribute
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0234.md
+# Enabled: False, Severity: warning
+dotnet_diagnostic.MA0234.severity = none
+
+# MA0235: The payload written by an EventSource event method must match its parameters
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0235.md
+# Enabled: False, Severity: warning
+dotnet_diagnostic.MA0235.severity = none
+
+# MA0236: The payload written by an EventSource event method must use the order of its parameters
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0236.md
+# Enabled: False, Severity: warning
+dotnet_diagnostic.MA0236.severity = none
+
+# MA0237: An EventSource event method writing a related activity id must declare it as its first parameter
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0237.md
+# Enabled: False, Severity: warning
+dotnet_diagnostic.MA0237.severity = none
+
+# MA0238: The parameter type of an EventSource event method is not supported
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0238.md
+# Enabled: False, Severity: warning
+dotnet_diagnostic.MA0238.severity = none
+
+# MA0239: Use 'typeof' instead of 'GetType()' when the type is sealed
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0239.md
+# Enabled: False, Severity: suggestion
+dotnet_diagnostic.MA0239.severity = suggestion
+
+# MA0240: Do not use banned syntax
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0240.md
+# Enabled: True, Severity: warning
+dotnet_diagnostic.MA0240.severity = warning
+
+# MA0241: The banned syntax entry is not valid
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0241.md
+# Enabled: True, Severity: warning
+dotnet_diagnostic.MA0241.severity = warning
+
+# MA0242: Use a value factory to compute the value only when the key is not in the ConcurrentDictionary
+# Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0242.md
+# Enabled: True, Severity: suggestion
+dotnet_diagnostic.MA0242.severity = suggestion
 

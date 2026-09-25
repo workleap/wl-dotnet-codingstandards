@@ -144,7 +144,7 @@ async Task<(string Id, NuGetVersion Version)[]> GetAllReferencedNuGetPackages()
 
     var cache = new SourceCacheContext();
     var repository = Repository.Factory.GetCoreV3("https://api.nuget.org/v3/index.json");
-    var resource = await repository.GetResourceAsync<PackageMetadataResource>();
+    var resource = await repository.GetResourceAsync<PackageMetadataResource>() ?? throw new InvalidOperationException("Cannot get the PackageMetadataResource");
 
     foreach (var package in GetReferencedNuGetPackages())
     {
@@ -181,7 +181,7 @@ async Task<(string Id, NuGetVersion Version)[]> GetAllReferencedNuGetPackages()
 
         foreach (var repository in repositories)
         {
-            var dependencyInfoResource = await repository.GetResourceAsync<DependencyInfoResource>(cancellationToken);
+            var dependencyInfoResource = await repository.GetResourceAsync<DependencyInfoResource>(cancellationToken) ?? throw new InvalidOperationException("Cannot get the DependencyInfoResource");
             var dependencyInfo = await dependencyInfoResource.ResolvePackage(package, framework, cache, logger, cancellationToken);
 
             if (dependencyInfo == null)
@@ -250,7 +250,8 @@ static async Task<Assembly[]> GetAnalyzerReferences(string packageId, NuGetVersi
 
     var package = await DownloadNuGetPackage(packageId, version, logger, cancellationToken);
     var result = new List<Assembly>();
-    var files = package.PackageReader.GetFiles("analyzers");
+    var packageReader = package.PackageReader ?? throw new InvalidOperationException($"Cannot read the package {packageId} {version}");
+    var files = packageReader.GetFiles("analyzers");
     var filesGroupedByFolder = files.GroupBy(Path.GetDirectoryName).ToArray();
     foreach (var group in filesGroupedByFolder)
     {
@@ -275,7 +276,7 @@ static async Task<Assembly[]> GetAnalyzerReferences(string packageId, NuGetVersi
                 {
                     try
                     {
-                        using var stream = package.PackageReader.GetStream(assemblyPath);
+                        using var stream = packageReader.GetStream(assemblyPath);
                         return context.LoadFromStream(stream);
                     }
                     catch
@@ -308,7 +309,7 @@ static async Task<Assembly[]> GetAnalyzerReferences(string packageId, NuGetVersi
 
             try
             {
-                using var stream = package.PackageReader.GetStream(file);
+                using var stream = packageReader.GetStream(file);
                 result.Add(context.LoadFromStream(stream));
             }
             catch (Exception ex)
@@ -329,11 +330,11 @@ static async Task<DownloadResourceResult> DownloadNuGetPackage(string packageId,
 
     var cache = new SourceCacheContext();
     var repository = Repository.Factory.GetCoreV3(source);
-    var resource = await repository.GetResourceAsync<FindPackageByIdResource>(cancellationToken);
+    var resource = await repository.GetResourceAsync<FindPackageByIdResource>(cancellationToken) ?? throw new InvalidOperationException("Cannot get the FindPackageByIdResource");
 
     if (version is null)
     {
-        var metadataResource = await repository.GetResourceAsync<PackageMetadataResource>(cancellationToken);
+        var metadataResource = await repository.GetResourceAsync<PackageMetadataResource>(cancellationToken) ?? throw new InvalidOperationException("Cannot get the PackageMetadataResource");
         var metadata = await metadataResource.GetMetadataAsync(packageId, includePrerelease: true, includeUnlisted: false, cache, NullLogger.Instance, CancellationToken.None);
         version = metadata.MaxBy(metadata => metadata.Identity.Version)!.Identity.Version;
     }
