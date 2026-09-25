@@ -1184,7 +1184,7 @@ dotnet_diagnostic.MA0238.severity = none
 # MA0239: Use 'typeof' instead of 'GetType()' when the type is sealed
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0239.md
 # Enabled: False, Severity: suggestion
-dotnet_diagnostic.MA0239.severity = none
+dotnet_diagnostic.MA0239.severity = suggestion
 
 # MA0240: Do not use banned syntax
 # Help link: https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0240.md
