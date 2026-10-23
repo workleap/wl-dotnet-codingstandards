@@ -7,7 +7,114 @@ on:
 
 jobs:
   create-release:
+    runs-on: [idp]
     permissions:
-      contents: write
-      id-token: write
-    uses: workleap/wl-reusable-workflows/.github/workflows/create-stable-release.yml@main
+      contents: write # Required to create a release
+      actions: write # Required to dispatch the publish workflow
+
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Get latest stable tag
+        id: get-latest-tag
+        shell: pwsh
+        run: |
+          # Get all tags sorted in natural order, then filter for stable versions (x.y.z)
+          $tag = git tag --sort=-v:refname | Where-Object { $_ -match '^\d+\.\d+\.\d+$' } | Select-Object -First 1
+          Write-Host "Latest stable tag: $tag"
+          if (-not $tag) { $tag = "" }
+          Add-Content -Path $env:GITHUB_OUTPUT -Value "tag=$tag"
+
+      - name: Get commits since last stable tag
+        id: get-commits
+        shell: pwsh
+        env:
+          LATEST_TAG: ${{ steps.get-latest-tag.outputs.tag }}
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:LATEST_TAG)) {
+            Write-Host "No stable tag found. Considering all commits."
+            $commitRange = "HEAD"
+          } else {
+            $commitRange = "$env:LATEST_TAG..HEAD"
+          }
+          # Get commit messages as a Markdown list
+          $commitMessages = git log $commitRange --pretty=format:'- %s'
+
+          # Gracefully exit if no commits found
+          if ([string]::IsNullOrWhiteSpace($commitMessages)) {
+            Write-Host "No new commits found since last stable tag. Exiting."
+            Add-Content -Path $env:GITHUB_OUTPUT -Value "has_commits=false"
+            exit 0
+          }
+
+          Write-Host "Commit messages:`n$commitMessages"
+          Add-Content -Path $env:GITHUB_OUTPUT -Value "commit_list<<EOF"
+          Add-Content -Path $env:GITHUB_OUTPUT -Value $commitMessages
+          Add-Content -Path $env:GITHUB_OUTPUT -Value "EOF"
+          Add-Content -Path $env:GITHUB_OUTPUT -Value "has_commits=true"
+
+      - name: Compute new version
+        id: compute-version
+        if: steps.get-commits.outputs.has_commits == 'true'
+        shell: pwsh
+        env:
+          LATEST_TAG: ${{ steps.get-latest-tag.outputs.tag }}
+          COMMIT_LIST: ${{ steps.get-commits.outputs.commit_list }}
+        run: |
+          # Retrieve the last stable tag; if not found, start with 0.0.0
+          if ([string]::IsNullOrWhiteSpace($env:LATEST_TAG)) {
+            Write-Host "No stable tag found. Using 0.0.0 as baseline."
+            $major = 0; $minor = 0; $patch = 0
+          } else {
+            $parts = $env:LATEST_TAG -split '\.'
+            [int]$major = $parts[0]
+            [int]$minor = $parts[1]
+            [int]$patch = $parts[2]
+          }
+
+          # Determine bump level using regex (order: major, then minor, then patch)
+          if ($env:COMMIT_LIST -imatch '#major') {
+            Write-Host "Bumping major version."
+            $major++
+            $minor = 0
+            $patch = 0
+          }
+          elseif ($env:COMMIT_LIST -imatch '#minor') {
+            Write-Host "Bumping minor version."
+            $minor++
+            $patch = 0
+          }
+          elseif ($env:COMMIT_LIST -imatch '#patch') {
+            Write-Host "Bumping patch version."
+            $patch++
+          }
+          else {
+            Write-Host "No version bump tag found. Defaulting to bump patch version."
+            $patch++
+          }
+          $newVersion = "$major.$minor.$patch"
+          Write-Host "New version: $newVersion"
+          Add-Content -Path $env:GITHUB_OUTPUT -Value "version=$newVersion"
+
+      - name: Create GitHub Release
+        if: steps.get-commits.outputs.has_commits == 'true'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.compute-version.outputs.version }}
+        run: gh release create $env:VERSION --title $env:VERSION --target main --generate-notes --fail-on-no-commits
+
+      # A tag created with GITHUB_TOKEN doesn't trigger "push: tags" workflows, but workflow_dispatch is allowed.
+      # Dispatching on the tag ref gives the publish workflow the same context as a tag push.
+      - name: Trigger publish workflow
+        if: steps.get-commits.outputs.has_commits == 'true'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.compute-version.outputs.version }}
+        run: gh workflow run publish.yml --ref $env:VERSION
