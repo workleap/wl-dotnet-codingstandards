@@ -5,6 +5,8 @@ on:
     branches: [main]
     tags: ["*.*.*"]
     paths-ignore: ["*.md"]
+  # Dispatched on a release tag by create-stable-release.yml
+  workflow_dispatch:
 
 # We are using OpenID Connect to authenticate with Azure with secret.
 # https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-azure
