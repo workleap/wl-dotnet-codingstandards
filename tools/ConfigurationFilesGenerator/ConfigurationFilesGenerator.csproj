@@ -15,6 +15,8 @@
     <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic" Version="5.9.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic.Workspaces" Version="5.9.0" />
     <PackageReference Include="NuGet.Protocol" Version="7.9.0" />
+    <!-- Transitive dependency of NuGet.Protocol, pinned to a version without known vulnerabilities -->
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.14" />
   </ItemGroup>
 
 </Project>
