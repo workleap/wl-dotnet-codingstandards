@@ -40,13 +40,3 @@ jobs:
         env:
           NUGET_SOURCE: ${{ vars.NUGET_SOURCE }}
           NUGET_API_KEY: ${{ steps.get_nuget_org_workleap_api_key_secret.outputs.secret }}
-
-  linearb:
-    needs: [main]
-    uses: workleap/wl-reusable-workflows/.github/workflows/linearb-deployment.yml@main
-    with:
-      environment: 'release'
-      cortexEntityIdOrTag: service-wl-dotnet-codingstandards
-    permissions:
-      id-token: write
-      contents: read
